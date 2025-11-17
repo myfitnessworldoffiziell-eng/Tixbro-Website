@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Tixbro - Company Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
+        .sidebar h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar .nav-link {
+            color: #ecf0f1;
+            padding: 15px 25px;
+            border-radius: 5px;
+            margin: 5px 15px;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: #34495e;
+            color: white;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .stats-card h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .event-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .event-stat {
+            text-align: center;
+        }
+        .event-stat strong {
+            display: block;
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h3>Tixbro</h3>
+                <p class="text-center text-muted" id="companyName">Loading...</p>
+                <nav class="nav flex-column">
+                    <a class="nav-link active" href="#" onclick="showSection('overview')"><i class="fas fa-home me-2"></i> Overview</a>
+                    <a class="nav-link" href="#" onclick="showSection('events')"><i class="fas fa-calendar me-2"></i> My Events</a>
+                    <a class="nav-link" href="create-event.html"><i class="fas fa-plus me-2"></i> Create Event</a>
+                    <a class="nav-link" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 p-4">
+                <!-- Overview Section -->
+                <div id="overviewSection">
+                    <h2 class="mb-4">Dashboard Overview</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="stats-card">
+                                <i class="fas fa-ticket-alt fa-2x text-primary mb-3"></i>
+                                <p class="text-muted mb-0">Total Tickets Sold</p>
+                                <h3 id="totalTickets">0</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stats-card">
+                                <i class="fas fa-rupee-sign fa-2x text-success mb-3"></i>
+                                <p class="text-muted mb-0">Total Revenue (INR)</p>
+                                <h3 id="totalRevenue">₹0</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stats-card">
+                                <i class="fas fa-calendar-check fa-2x text-info mb-3"></i>
+                                <p class="text-muted mb-0">Active Events</p>
+                                <h3 id="activeEvents">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a href="create-event.html" class="btn btn-primary btn-lg"><i class="fas fa-plus me-2"></i>Create New Event</a>
+                    </div>
+                </div>
+
+                <!-- Events Section -->
+                <div id="eventsSection" style="display: none;">
+                    <h2 class="mb-4">My Events</h2>
+                    <div id="eventsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+        import { checkAuth, logout as authLogout } from './js/auth.js';
+        import { getCompanyEvents } from './js/events.js';
+
+        let currentUser = null;
+
+        // Check authentication
+        checkAuth(async (authState) => {
+            if (!authState.isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = authState;
+            document.getElementById('companyName').textContent = authState.companyData.companyName;
+            document.getElementById('totalTickets').textContent = authState.companyData.totalTicketsSold || 0;
+            document.getElementById('totalRevenue').textContent = '₹' + (authState.companyData.totalRevenue || 0).toFixed(2);
+
+            await loadEvents();
+        });
+
+        // Load company events
+        async function loadEvents() {
+            const result = await getCompanyEvents(currentUser.userId);
+
+            if (result.success) {
+                const activeEventsCount = result.events.filter(e => e.status === 'active').length;
+                document.getElementById('activeEvents').textContent = activeEventsCount;
+
+                displayEvents(result.events);
+            }
+        }
+
+        // Display events
+        function displayEvents(events) {
+            const eventsList = document.getElementById('eventsList');
+            if (events.length === 0) {
+                eventsList.innerHTML = '<p class="text-muted">No events yet. <a href="create-event.html">Create your first event</a></p>';
+                return;
+            }
+
+            eventsList.innerHTML = events.map(event => `
+                <div class="event-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>${event.title}</h4>
+                            <p class="text-muted mb-0"><i class="fas fa-map-marker-alt me-2"></i>${event.city} | ${event.category}</p>
+                            <p class="text-muted mb-0"><i class="fas fa-calendar me-2"></i>${event.date} at ${event.time}</p>
+                        </div>
+                        <div>
+                            <span class="badge bg-${event.status === 'active' ? 'success' : 'secondary'}">${event.status}</span>
+                        </div>
+                    </div>
+                    <div class="event-stats">
+                        <div class="event-stat">
+                            <strong>${event.soldTickets}</strong>
+                            <small>Sold</small>
+                        </div>
+                        <div class="event-stat">
+                            <strong>${event.availableTickets}</strong>
+                            <small>Available</small>
+                        </div>
+                        <div class="event-stat">
+                            <strong>${event.views || 0}</strong>
+                            <small>Views</small>
+                        </div>
+                        <div class="event-stat">
+                            <strong>${event.clicks || 0}</strong>
+                            <small>Clicks</small>
+                        </div>
+                        <div class="event-stat">
+                            <strong>₹${(event.soldTickets * event.price * 0.9).toFixed(2)}</strong>
+                            <small>Revenue</small>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Show section
+        window.showSection = function(section) {
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('overviewSection').style.display = section === 'overview' ? 'block' : 'none';
+            document.getElementById('eventsSection').style.display = section === 'events' ? 'block' : 'none';
+        };
+
+        // Logout
+        window.logout = async function() {
+            await authLogout();
+        };
+    </script>
+</body>
+</html>
