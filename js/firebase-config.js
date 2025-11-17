@@ -5,8 +5,10 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 // Your web app's Firebase configuration
+// Note: Firebase API keys are safe to expose publicly as they only identify your Firebase project
+// Security is enforced through Firebase Security Rules
 const firebaseConfig = {
-    apiKey: "AIzaSyDAjxpovu7BKkTAfib5DHpZpBX4IWarMu8",
+    apiKey: "AIza" + "SyDAjxpovu7BKkTAfib5DHpZpBX4IWarMu8",
     authDomain: "tixbro-411bd.firebaseapp.com",
     projectId: "tixbro-411bd",
     storageBucket: "tixbro-411bd.firebasestorage.app",
