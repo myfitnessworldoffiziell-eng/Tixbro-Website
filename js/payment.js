@@ -62,41 +62,40 @@ export async function processStripePayment(customerData) {
             throw new Error('No checkout data found');
         }
 
-        // In production, you would:
-        // 1. Create a Stripe Checkout Session on your backend
-        // 2. Return the session ID
-        // 3. Redirect to Stripe Checkout using stripe.redirectToCheckout()
+        // Store customer data temporarily for after Stripe redirect
+        sessionStorage.setItem('checkoutCustomer', JSON.stringify(customerData));
 
-        // For now, we'll simulate a successful payment
-        // and create the ticket directly
+        // Create Stripe Checkout Session via backend
+        const response = await fetch('/.netlify/functions/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                eventId: checkoutData.eventId,
+                eventTitle: checkoutData.eventTitle,
+                price: checkoutData.price,
+                quantity: checkoutData.quantity,
+                customerEmail: customerData.email
+            })
+        });
 
-        const paymentData = {
-            paymentId: 'stripe_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-            paymentMethod: 'stripe_card'
-        };
+        const result = await response.json();
 
-        // Create ticket in Firestore
-        const ticketResult = await purchaseTicket(
-            checkoutData.eventId,
-            customerData,
-            paymentData
-        );
-
-        if (ticketResult.success) {
-            // Clear checkout data
-            sessionStorage.removeItem('checkoutEvent');
-
-            // Store ticket info for success page
-            sessionStorage.setItem('purchasedTicket', JSON.stringify({
-                ticketId: ticketResult.ticketId,
-                ...checkoutData,
-                ...customerData
-            }));
-
-            return { success: true, ticketId: ticketResult.ticketId };
-        } else {
-            throw new Error(ticketResult.error);
+        if (!result.success) {
+            throw new Error(result.error || 'Failed to create checkout session');
         }
+
+        // Redirect to Stripe Checkout
+        const { error } = await stripe.redirectToCheckout({
+            sessionId: result.sessionId
+        });
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        return { success: true };
 
     } catch (error) {
         console.error('Payment processing error:', error);

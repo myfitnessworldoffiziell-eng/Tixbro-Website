@@ -1,0 +1,27 @@
+{
+  "name": "tixbro-website",
+  "version": "1.0.0",
+  "description": "India's Premier Ticket Booking Platform",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "netlify deploy --prod"
+  },
+  "keywords": [
+    "tickets",
+    "booking",
+    "events",
+    "india",
+    "stripe"
+  ],
+  "author": "Tixbro",
+  "license": "MIT",
+  "dependencies": {
+    "stripe": "^14.10.0",
+    "firebase-admin": "^12.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
