@@ -62,6 +62,12 @@ export async function processStripePayment(customerData, cardElement) {
             throw new Error('No checkout data found');
         }
 
+        // Validate quantity
+        const quantity = checkoutData.quantity || 1;
+        if (quantity < 1) {
+            throw new Error('Invalid quantity');
+        }
+
         // Step 1: Create Payment Intent on backend
         const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'POST',
@@ -108,35 +114,60 @@ export async function processStripePayment(customerData, cardElement) {
             throw new Error('Payment was not successful. Please try again.');
         }
 
-        // Step 4: Create ticket in Firestore
+        // Step 4: Create tickets in Firestore (handle multiple tickets if quantity > 1)
         const paymentData = {
             paymentId: paymentIntent.id,
             paymentMethod: 'stripe_card',
             paymentStatus: 'completed'
         };
 
-        const ticketResult = await purchaseTicket(
-            checkoutData.eventId,
-            customerData,
-            paymentData
-        );
+        // Prepare customer data with full name
+        const ticketCustomerData = {
+            ...customerData,
+            name: `${customerData.firstName} ${customerData.lastName}`
+        };
 
-        if (ticketResult.success) {
-            // Clear checkout data
-            sessionStorage.removeItem('checkoutEvent');
+        // Create tickets (one by one if quantity > 1)
+        const ticketIds = [];
+        const quantity = checkoutData.quantity || 1;
 
-            // Store ticket info for success page
-            sessionStorage.setItem('purchasedTicket', JSON.stringify({
-                ticketId: ticketResult.ticketId,
-                paymentId: paymentIntent.id,
-                ...checkoutData,
-                ...customerData
-            }));
+        // Create tickets sequentially (Firestore transaction handles availability check)
+        for (let i = 0; i < quantity; i++) {
+            const ticketResult = await purchaseTicket(
+                checkoutData.eventId,
+                ticketCustomerData,
+                paymentData
+            );
 
-            return { success: true, ticketId: ticketResult.ticketId };
-        } else {
-            throw new Error(ticketResult.error);
+            if (!ticketResult.success) {
+                // If ticket creation fails, we should ideally refund the payment
+                // For now, throw error and let Stripe handle it
+                throw new Error(`Failed to create ticket ${i + 1} of ${quantity}: ${ticketResult.error}`);
+            }
+
+            ticketIds.push(ticketResult.ticketId);
         }
+
+        const mainTicketId = ticketIds[0];
+
+        // Clear checkout data
+        sessionStorage.removeItem('checkoutEvent');
+
+        // Store ticket info for success page
+        sessionStorage.setItem('purchasedTicket', JSON.stringify({
+            ticketId: mainTicketId,
+            ticketIds: ticketIds, // All ticket IDs if multiple
+            paymentId: paymentIntent.id,
+            ...checkoutData,
+            ...customerData
+        }));
+
+        return {
+            success: true,
+            ticketId: mainTicketId,
+            ticketIds: ticketIds,
+            ticketCount: ticketIds.length
+        };
 
     } catch (error) {
         console.error('Payment processing error:', error);
