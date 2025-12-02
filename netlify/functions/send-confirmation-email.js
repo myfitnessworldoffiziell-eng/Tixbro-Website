@@ -1,10 +1,7 @@
 // Netlify Serverless Function to send ticket confirmation emails
-// Uses SendGrid for email delivery
+// Uses Brevo (formerly Sendinblue) for email delivery
 
-const sgMail = require('@sendgrid/mail');
-
-// Initialize SendGrid with API key from environment variable
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const brevo = require('@getbrevo/brevo');
 
 exports.handler = async (event, context) => {
   // Enable CORS
@@ -59,6 +56,10 @@ exports.handler = async (event, context) => {
         })
       };
     }
+
+    // Initialize Brevo API client
+    const apiInstance = new brevo.TransactionalEmailsApi();
+    apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
 
     // Format date
     const formatDate = (dateString) => {
@@ -279,22 +280,31 @@ Bei Fragen: support@tixbro.com
 © ${new Date().getFullYear()} Tixbro
     `;
 
-    // Send email using SendGrid
-    const msg = {
-      to: customerEmail,
-      from: {
-        email: process.env.SENDGRID_FROM_EMAIL || 'noreply@tixbro.com',
-        name: 'Tixbro'
-      },
-      subject: `✓ Ticket-Bestätigung - ${eventTitle}`,
-      text: textContent,
-      html: htmlContent
+    // Prepare email using Brevo API
+    const sendSmtpEmail = new brevo.SendSmtpEmail();
+
+    sendSmtpEmail.sender = {
+      name: 'Tixbro',
+      email: process.env.BREVO_FROM_EMAIL || 'noreply@tixbro.com'
     };
 
-    await sgMail.send(msg);
+    sendSmtpEmail.to = [
+      {
+        email: customerEmail,
+        name: customerName
+      }
+    ];
 
-    console.log('Confirmation email sent to:', customerEmail);
+    sendSmtpEmail.subject = `✓ Ticket-Bestätigung - ${eventTitle}`;
+    sendSmtpEmail.htmlContent = htmlContent;
+    sendSmtpEmail.textContent = textContent;
+
+    // Send email using Brevo
+    const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+
+    console.log('Confirmation email sent via Brevo to:', customerEmail);
     console.log('Ticket IDs:', ticketIds);
+    console.log('Brevo Message ID:', result.messageId);
 
     return {
       statusCode: 200,
@@ -302,16 +312,17 @@ Bei Fragen: support@tixbro.com
       body: JSON.stringify({
         success: true,
         message: 'Confirmation email sent successfully',
-        recipient: customerEmail
+        recipient: customerEmail,
+        messageId: result.messageId
       })
     };
 
   } catch (error) {
-    console.error('Error sending confirmation email:', error);
+    console.error('Error sending confirmation email via Brevo:', error);
 
-    // Check if it's a SendGrid specific error
+    // Check if it's a Brevo specific error
     if (error.response) {
-      console.error('SendGrid error:', error.response.body);
+      console.error('Brevo API error:', error.response.body || error.response.text);
     }
 
     return {

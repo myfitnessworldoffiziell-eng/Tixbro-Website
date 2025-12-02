@@ -38,28 +38,28 @@ Value: [Dein Webhook Secret - beginnt mit whsec_...]
 - Oder verwende den Key, den du bereits hast
 
 
-#### ✅ Variable 3: SENDGRID_API_KEY
+#### ✅ Variable 3: BREVO_API_KEY
 
 ```
-Key:   SENDGRID_API_KEY
-Value: [Dein SendGrid API Key - beginnt mit SG.xxx...]
+Key:   BREVO_API_KEY
+Value: [Dein Brevo API Key - beginnt mit xkeysib-...]
 ```
 
 **Wo finde ich den Key?**
-- SendGrid Dashboard → Settings → API Keys
+- Brevo Dashboard → Settings → API Keys → SMTP & API
 - Erstelle neuen Key falls noch nicht vorhanden
 - Siehe `EMAIL_SETUP.md` für detaillierte Anleitung
 
 
-#### ✅ Variable 4: SENDGRID_FROM_EMAIL
+#### ✅ Variable 4: BREVO_FROM_EMAIL
 
 ```
-Key:   SENDGRID_FROM_EMAIL
+Key:   BREVO_FROM_EMAIL
 Value: [Deine verifizierte E-Mail - z.B. noreply@deine-domain.com]
 ```
 
 **Wichtig:**
-- E-Mail muss in SendGrid verifiziert sein
+- E-Mail muss in Brevo verifiziert sein
 - Siehe `EMAIL_SETUP.md` für Sender Verification
 - Format: noreply@deine-domain.com (oder andere verifizierte E-Mail)
 
@@ -96,10 +96,10 @@ Value: [Deine verifizierte E-Mail - z.B. noreply@deine-domain.com]
 
 - [ ] STRIPE_SECRET_KEY in Netlify gesetzt
 - [ ] STRIPE_WEBHOOK_SECRET in Netlify gesetzt
-- [ ] SENDGRID_API_KEY in Netlify gesetzt ✨ NEU
-- [ ] SENDGRID_FROM_EMAIL in Netlify gesetzt ✨ NEU
+- [ ] BREVO_API_KEY in Netlify gesetzt ✨ NEU
+- [ ] BREVO_FROM_EMAIL in Netlify gesetzt ✨ NEU
 - [ ] Webhook-Endpoint in Stripe Dashboard konfiguriert
-- [ ] SendGrid Sender verifiziert ✨ NEU
+- [ ] Brevo Sender verifiziert ✨ NEU
 - [ ] Test-Zahlung durchgeführt
 - [ ] Stripe Dashboard zeigt erfolgreiche Zahlung
 - [ ] Netlify Functions Logs zeigen keine Fehler
