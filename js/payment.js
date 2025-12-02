@@ -1,7 +1,9 @@
 // Payment Processing with Stripe for Tixbro
-// Tickets and emails are now handled by Stripe Webhook (stripe-webhook.js)
+// Manual workflow: Payment → Order saved in Firebase → Manual ticket creation
 import { getStripe } from './stripe-config.js';
 import { getEvent, incrementEventClicks } from './events.js';
+import { db } from './firebase-config.js';
+import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
 // Create Stripe Checkout Session for ticket purchase
 export async function createCheckoutSession(eventId, quantity = 1) {
@@ -21,9 +23,6 @@ export async function createCheckoutSession(eventId, quantity = 1) {
 
         // Calculate total amount (in paise for INR)
         const amountInPaise = Math.round(event.price * quantity * 100);
-
-        // For demo purposes, we'll redirect to a checkout page
-        // In production, you would create a Stripe Checkout Session via your backend
 
         // Store checkout info in sessionStorage
         sessionStorage.setItem('checkoutEvent', JSON.stringify({
@@ -68,7 +67,7 @@ export async function processStripePayment(customerData, cardElement) {
             throw new Error('Invalid quantity');
         }
 
-        // Step 1: Create Payment Intent on backend with all customer & event data
+        // Step 1: Create Payment Intent on backend
         const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'POST',
             headers: {
@@ -121,38 +120,52 @@ export async function processStripePayment(customerData, cardElement) {
             throw new Error('Payment was not successful. Please try again.');
         }
 
-        // Step 4: Payment successful!
-        // Stripe webhook will automatically:
-        // ✅ Create tickets in Firebase
-        // ✅ Send confirmation email via Brevo
-        // ✅ Create contact in Brevo for marketing
+        // Step 4: Save order to Firebase for manual processing
+        console.log('Payment successful! Saving order to Firebase...');
 
-        console.log('Payment successful! Webhook will process tickets and email.');
-        console.log('Payment ID:', paymentIntent.id);
+        const orderId = await saveOrderToFirebase({
+            paymentId: paymentIntent.id,
+            customerFirstName: customerData.firstName,
+            customerLastName: customerData.lastName,
+            customerEmail: customerData.email,
+            customerPhone: customerData.phone || '',
+            eventId: checkoutData.eventId,
+            eventTitle: checkoutData.eventTitle,
+            eventDate: checkoutData.eventDate,
+            eventTime: checkoutData.eventTime,
+            eventLocation: checkoutData.eventLocation,
+            eventVenue: checkoutData.eventVenue,
+            quantity: quantity,
+            totalAmount: checkoutData.totalAmount,
+            currency: 'INR'
+        });
+
+        console.log('Order saved to Firebase:', orderId);
 
         // Clear checkout data
         sessionStorage.removeItem('checkoutEvent');
 
-        // Store payment info for success page
-        // Note: Ticket IDs will be sent via email (created by webhook)
+        // Store order info for success page
         sessionStorage.setItem('purchasedTicket', JSON.stringify({
+            orderId: orderId,
             paymentId: paymentIntent.id,
             customerEmail: customerData.email,
             customerName: `${customerData.firstName} ${customerData.lastName}`,
-            quantity: checkoutData.quantity || 1,
+            quantity: quantity,
             totalAmount: checkoutData.totalAmount,
             eventTitle: checkoutData.eventTitle,
             eventDate: checkoutData.eventDate,
             eventTime: checkoutData.eventTime,
             eventLocation: checkoutData.eventLocation,
             eventVenue: checkoutData.eventVenue,
-            webhookProcessing: true // Indicates tickets are being created by webhook
+            manualProcessing: true // Indicates tickets will be sent manually
         }));
 
         return {
             success: true,
+            orderId: orderId,
             paymentId: paymentIntent.id,
-            message: 'Payment successful! You will receive your tickets via email shortly.'
+            message: 'Payment successful! You will receive your tickets via email within 24 hours.'
         };
 
     } catch (error) {
@@ -161,6 +174,55 @@ export async function processStripePayment(customerData, cardElement) {
     }
 }
 
-// NOTE: Ticket creation and email confirmation are now handled by the Stripe webhook
-// See netlify/functions/stripe-webhook.js for implementation
-// This ensures 100% reliability even if the user's browser closes after payment
+// Save order to Firebase (for manual ticket creation)
+async function saveOrderToFirebase(orderData) {
+    try {
+        const ordersRef = collection(db, 'orders');
+
+        const order = {
+            // Order Info
+            orderId: 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+            status: 'paid', // paid, tickets_created, tickets_sent, completed
+
+            // Payment Info
+            paymentId: orderData.paymentId,
+            paymentStatus: 'completed',
+            paymentMethod: 'stripe_card',
+            currency: orderData.currency,
+            totalAmount: orderData.totalAmount,
+
+            // Customer Info
+            customerFirstName: orderData.customerFirstName,
+            customerLastName: orderData.customerLastName,
+            customerEmail: orderData.customerEmail,
+            customerPhone: orderData.customerPhone,
+
+            // Event Info
+            eventId: orderData.eventId,
+            eventTitle: orderData.eventTitle,
+            eventDate: orderData.eventDate,
+            eventTime: orderData.eventTime,
+            eventLocation: orderData.eventLocation,
+            eventVenue: orderData.eventVenue,
+
+            // Ticket Info
+            quantity: orderData.quantity,
+            ticketsCreated: false, // Admin creates tickets manually
+            ticketsSent: false, // Admin sends tickets manually
+            ticketIds: [], // Will be filled when tickets are created
+
+            // Timestamps
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+        };
+
+        const docRef = await addDoc(ordersRef, order);
+        console.log('Order saved with ID:', docRef.id);
+
+        return order.orderId;
+
+    } catch (error) {
+        console.error('Error saving order to Firebase:', error);
+        throw new Error('Failed to save order: ' + error.message);
+    }
+}
