@@ -1,6 +1,6 @@
 // Payment Processing with Stripe for Tixbro
+// Tickets and emails are now handled by Stripe Webhook (stripe-webhook.js)
 import { getStripe } from './stripe-config.js';
-import { purchaseTicket } from './tickets.js';
 import { getEvent, incrementEventClicks } from './events.js';
 
 // Create Stripe Checkout Session for ticket purchase
@@ -68,7 +68,7 @@ export async function processStripePayment(customerData, cardElement) {
             throw new Error('Invalid quantity');
         }
 
-        // Step 1: Create Payment Intent on backend
+        // Step 1: Create Payment Intent on backend with all customer & event data
         const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'POST',
             headers: {
@@ -79,7 +79,14 @@ export async function processStripePayment(customerData, cardElement) {
                 currency: 'inr',
                 eventId: checkoutData.eventId,
                 eventTitle: checkoutData.eventTitle,
-                customerEmail: customerData.email
+                customerEmail: customerData.email,
+                customerName: `${customerData.firstName} ${customerData.lastName}`,
+                customerPhone: customerData.phone || '',
+                eventDate: checkoutData.eventDate,
+                eventTime: checkoutData.eventTime,
+                eventLocation: checkoutData.eventLocation,
+                eventVenue: checkoutData.eventVenue,
+                quantity: quantity
             })
         });
 
@@ -114,78 +121,38 @@ export async function processStripePayment(customerData, cardElement) {
             throw new Error('Payment was not successful. Please try again.');
         }
 
-        // Step 4: Create tickets in Firestore (handle multiple tickets if quantity > 1)
-        const paymentData = {
+        // Step 4: Payment successful!
+        // Stripe webhook will automatically:
+        // ✅ Create tickets in Firebase
+        // ✅ Send confirmation email via Brevo
+        // ✅ Create contact in Brevo for marketing
+
+        console.log('Payment successful! Webhook will process tickets and email.');
+        console.log('Payment ID:', paymentIntent.id);
+
+        // Clear checkout data
+        sessionStorage.removeItem('checkoutEvent');
+
+        // Store payment info for success page
+        // Note: Ticket IDs will be sent via email (created by webhook)
+        sessionStorage.setItem('purchasedTicket', JSON.stringify({
             paymentId: paymentIntent.id,
-            paymentMethod: 'stripe_card',
-            paymentStatus: 'completed'
-        };
-
-        // Prepare customer data with full name
-        const ticketCustomerData = {
-            ...customerData,
-            name: `${customerData.firstName} ${customerData.lastName}`
-        };
-
-        // Create tickets (one by one if quantity > 1)
-        const ticketIds = [];
-        const quantity = checkoutData.quantity || 1;
-
-        // Create tickets sequentially (Firestore transaction handles availability check)
-        for (let i = 0; i < quantity; i++) {
-            const ticketResult = await purchaseTicket(
-                checkoutData.eventId,
-                ticketCustomerData,
-                paymentData
-            );
-
-            if (!ticketResult.success) {
-                // If ticket creation fails, we should ideally refund the payment
-                // For now, throw error and let Stripe handle it
-                throw new Error(`Failed to create ticket ${i + 1} of ${quantity}: ${ticketResult.error}`);
-            }
-
-            ticketIds.push(ticketResult.ticketId);
-        }
-
-        const mainTicketId = ticketIds[0];
-
-        // Step 5: Send confirmation email (async, don't block on failure)
-        sendConfirmationEmail({
             customerEmail: customerData.email,
             customerName: `${customerData.firstName} ${customerData.lastName}`,
-            customerPhone: customerData.phone || '',
-            ticketIds: ticketIds,
+            quantity: checkoutData.quantity || 1,
+            totalAmount: checkoutData.totalAmount,
             eventTitle: checkoutData.eventTitle,
             eventDate: checkoutData.eventDate,
             eventTime: checkoutData.eventTime,
             eventLocation: checkoutData.eventLocation,
             eventVenue: checkoutData.eventVenue,
-            totalAmount: checkoutData.totalAmount,
-            quantity: quantity,
-            paymentId: paymentIntent.id
-        }).catch(error => {
-            // Log error but don't fail the transaction
-            console.error('Failed to send confirmation email:', error);
-        });
-
-        // Clear checkout data
-        sessionStorage.removeItem('checkoutEvent');
-
-        // Store ticket info for success page
-        sessionStorage.setItem('purchasedTicket', JSON.stringify({
-            ticketId: mainTicketId,
-            ticketIds: ticketIds, // All ticket IDs if multiple
-            paymentId: paymentIntent.id,
-            ...checkoutData,
-            ...customerData
+            webhookProcessing: true // Indicates tickets are being created by webhook
         }));
 
         return {
             success: true,
-            ticketId: mainTicketId,
-            ticketIds: ticketIds,
-            ticketCount: ticketIds.length
+            paymentId: paymentIntent.id,
+            message: 'Payment successful! You will receive your tickets via email shortly.'
         };
 
     } catch (error) {
@@ -194,35 +161,6 @@ export async function processStripePayment(customerData, cardElement) {
     }
 }
 
-// Verify payment (for webhook handling in future)
-export async function verifyPayment(sessionId) {
-    // This would be handled by backend webhook
-    // For now, just return success
-    return { success: true };
-}
-
-// Send confirmation email via Netlify Function
-async function sendConfirmationEmail(emailData) {
-    try {
-        const response = await fetch('/.netlify/functions/send-confirmation-email', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(emailData)
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to send confirmation email');
-        }
-
-        const result = await response.json();
-        console.log('Confirmation email sent successfully:', result);
-        return result;
-
-    } catch (error) {
-        console.error('Error sending confirmation email:', error);
-        throw error;
-    }
-}
+// NOTE: Ticket creation and email confirmation are now handled by the Stripe webhook
+// See netlify/functions/stripe-webhook.js for implementation
+// This ensures 100% reliability even if the user's browser closes after payment

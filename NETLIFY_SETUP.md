@@ -11,7 +11,7 @@ Nach dem ersten Deployment **MUSST** du folgende Umgebungsvariablen in Netlify s
 3. **Navigiere zu:** Site settings → Environment variables
 4. **Klicke:** Add a variable
 
-### Füge folgende 4 Variablen hinzu:
+### Füge folgende 5 Variablen hinzu:
 
 #### ✅ Variable 1: STRIPE_SECRET_KEY
 
@@ -63,6 +63,27 @@ Value: [Deine verifizierte E-Mail - z.B. noreply@deine-domain.com]
 - Siehe `EMAIL_SETUP.md` für Sender Verification
 - Format: noreply@deine-domain.com (oder andere verifizierte E-Mail)
 
+
+#### ✅ Variable 5: FIREBASE_SERVICE_ACCOUNT
+
+```
+Key:   FIREBASE_SERVICE_ACCOUNT
+Value: [Firebase Service Account JSON - kompletter Inhalt]
+```
+
+**Wo finde ich das?**
+1. Firebase Console → Project Settings → Service Accounts
+2. Klicke "Generate new private key"
+3. Download JSON-Datei
+4. Kopiere den **kompletten Inhalt** der JSON-Datei
+5. Siehe `WEBHOOK_SETUP.md` für detaillierte Anleitung
+
+**Wichtig:**
+- Komplette JSON-Datei als einen String einfügen
+- Wird für automatische Ticketerstellung via Webhook benötigt
+- ⚡ **NEU:** Webhook-basierte Implementierung (100% zuverlässig!)
+- Siehe `WEBHOOK_SETUP.md` für vollständige Setup-Anleitung
+
 ---
 
 ## ⚠️ WICHTIG - Sicherheitshinweise:
@@ -96,15 +117,17 @@ Value: [Deine verifizierte E-Mail - z.B. noreply@deine-domain.com]
 
 - [ ] STRIPE_SECRET_KEY in Netlify gesetzt
 - [ ] STRIPE_WEBHOOK_SECRET in Netlify gesetzt
-- [ ] BREVO_API_KEY in Netlify gesetzt ✨ NEU
-- [ ] BREVO_FROM_EMAIL in Netlify gesetzt ✨ NEU
-- [ ] Webhook-Endpoint in Stripe Dashboard konfiguriert
-- [ ] Brevo Sender verifiziert ✨ NEU
+- [ ] BREVO_API_KEY in Netlify gesetzt
+- [ ] BREVO_FROM_EMAIL in Netlify gesetzt
+- [ ] FIREBASE_SERVICE_ACCOUNT in Netlify gesetzt ⚡ NEU
+- [ ] Webhook-Endpoint in Stripe Dashboard konfiguriert (siehe `WEBHOOK_SETUP.md`) ⚡ NEU
+- [ ] Brevo Sender verifiziert
 - [ ] Test-Zahlung durchgeführt
 - [ ] Stripe Dashboard zeigt erfolgreiche Zahlung
+- [ ] Stripe Webhook Logs zeigen 200 OK ⚡ NEU
 - [ ] Netlify Functions Logs zeigen keine Fehler
 - [ ] Firebase zeigt erstelltes Ticket
-- [ ] Bestätigungs-E-Mail empfangen ✨ NEU
+- [ ] Bestätigungs-E-Mail empfangen
 
 ---
 
@@ -129,7 +152,9 @@ Value: [Deine verifizierte E-Mail - z.B. noreply@deine-domain.com]
 ## 📞 Support
 
 Bei Problemen:
-- 📖 Detaillierte Anleitung: `STRIPE_DEPLOYMENT.md`
+- 📖 Webhook Setup: `WEBHOOK_SETUP.md` ⚡ NEU
+- 📖 E-Mail Setup: `EMAIL_SETUP.md`
+- 📖 Stripe Deployment: `STRIPE_DEPLOYMENT.md`
 - 🌐 Stripe Docs: https://stripe.com/docs
 - 💬 Stripe Support: https://support.stripe.com
 
