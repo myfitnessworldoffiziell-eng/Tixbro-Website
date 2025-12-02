@@ -154,6 +154,7 @@ export async function processStripePayment(customerData, cardElement) {
         sendConfirmationEmail({
             customerEmail: customerData.email,
             customerName: `${customerData.firstName} ${customerData.lastName}`,
+            customerPhone: customerData.phone || '',
             ticketIds: ticketIds,
             eventTitle: checkoutData.eventTitle,
             eventDate: checkoutData.eventDate,

@@ -88,10 +88,11 @@ Wenn du deine eigene Domain besitzt:
    ```
    ⚠️ **Dieser Key wird nur EINMAL angezeigt!** Kopiere ihn jetzt!
 
-**Dein Key (bereits vorhanden):**
+**Beispiel:**
 ```
-[Dein Brevo API Key - beginnt mit xkeysib-...]
+xkeysib-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxx
 ```
+_(Verwende deinen eigenen API Key von Brevo)_
 
 ---
 

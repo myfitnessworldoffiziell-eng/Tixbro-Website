@@ -35,6 +35,7 @@ exports.handler = async (event, context) => {
     const {
       customerEmail,
       customerName,
+      customerPhone,
       ticketIds,
       eventTitle,
       eventDate,
@@ -57,9 +58,12 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Initialize Brevo API client
-    const apiInstance = new brevo.TransactionalEmailsApi();
-    apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
+    // Initialize Brevo API clients
+    const emailApi = new brevo.TransactionalEmailsApi();
+    emailApi.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
+
+    const contactsApi = new brevo.ContactsApi();
+    contactsApi.setApiKey(brevo.ContactsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
 
     // Format date
     const formatDate = (dateString) => {
@@ -300,20 +304,55 @@ Bei Fragen: support@tixbro.com
     sendSmtpEmail.textContent = textContent;
 
     // Send email using Brevo
-    const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    const emailResult = await emailApi.sendTransacEmail(sendSmtpEmail);
 
     console.log('Confirmation email sent via Brevo to:', customerEmail);
     console.log('Ticket IDs:', ticketIds);
-    console.log('Brevo Message ID:', result.messageId);
+    console.log('Brevo Message ID:', emailResult.messageId);
+
+    // Create or update contact in Brevo
+    // This allows for marketing campaigns and better customer management
+    try {
+      const createContact = new brevo.CreateContact();
+
+      createContact.email = customerEmail;
+      createContact.attributes = {
+        FIRSTNAME: customerName.split(' ')[0] || customerName,
+        LASTNAME: customerName.split(' ').slice(1).join(' ') || '',
+        SMS: customerPhone || '', // Phone number if provided
+        LAST_EVENT: eventTitle,
+        LAST_PURCHASE_DATE: new Date().toISOString().split('T')[0], // YYYY-MM-DD
+        TICKET_COUNT: quantity,
+        TOTAL_SPENT: totalAmount,
+        LAST_TICKET_IDS: ticketIds.join(', ')
+      };
+
+      // Update if exists, create if not exists
+      createContact.updateEnabled = true;
+
+      // Add to a list (optional - you can create lists in Brevo Dashboard)
+      // createContact.listIds = [1]; // List ID from Brevo
+
+      await contactsApi.createContact(createContact);
+
+      console.log('Contact created/updated in Brevo:', customerEmail);
+    } catch (contactError) {
+      // Log error but don't fail the whole request
+      // Email was already sent successfully
+      console.error('Failed to create/update contact in Brevo:', contactError.message);
+      if (contactError.response) {
+        console.error('Brevo Contact API error:', contactError.response.body);
+      }
+    }
 
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
         success: true,
-        message: 'Confirmation email sent successfully',
+        message: 'Confirmation email sent successfully and contact updated',
         recipient: customerEmail,
-        messageId: result.messageId
+        messageId: emailResult.messageId
       })
     };
 
