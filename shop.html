@@ -91,11 +91,13 @@
                     <div class="col-md-4">
                         <select id="categoryFilter" class="form-select">
                             <option value="">All Categories</option>
-                            <option value="bus">Bus Tickets</option>
                             <option value="movies">Movies</option>
                             <option value="concerts">Concerts</option>
-                            <option value="theatre">Theatre & Plays</option>
                             <option value="sports">Sports Events</option>
+                            <option value="theatre">Theatre & Plays</option>
+                            <option value="turf">Turf Booking</option>
+                            <option value="college-fest">College Fests</option>
+                            <option value="bus">Bus Tickets</option>
                             <option value="events">Events & More</option>
                         </select>
                     </div>
@@ -237,11 +239,13 @@
         // Helper functions
         function getCategoryName(category) {
             const categories = {
-                'bus': 'Bus Tickets',
                 'movies': 'Movies',
                 'concerts': 'Concerts',
-                'theatre': 'Theatre',
                 'sports': 'Sports',
+                'theatre': 'Theatre',
+                'turf': 'Turf Booking',
+                'college-fest': 'College Fests',
+                'bus': 'Bus Tickets',
                 'events': 'Events'
             };
             return categories[category] || category;
