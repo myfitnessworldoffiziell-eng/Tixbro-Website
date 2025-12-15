@@ -652,6 +652,7 @@
             const result = await getActiveEvents(category);
 
             if (result.success) {
+                allEvents = result.events; // Update allEvents for search
                 displayEvents(result.events);
             } else {
                 showEmpty();
@@ -659,18 +660,25 @@
         }
 
         // Search events
-        window.searchEvents = function() {
+        window.searchEvents = async function() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
             if (!searchTerm) {
-                displayEvents(allEvents);
+                // If no search term, reload based on current filter
+                if (currentFilter) {
+                    await filterByCategory(currentFilter);
+                } else {
+                    await loadAllEvents();
+                }
                 return;
             }
 
+            // Search through current events (respects category filter)
             const filtered = allEvents.filter(event =>
                 event.title.toLowerCase().includes(searchTerm) ||
                 event.description.toLowerCase().includes(searchTerm) ||
-                event.category.toLowerCase().includes(searchTerm)
+                event.city.toLowerCase().includes(searchTerm) ||
+                event.venue.toLowerCase().includes(searchTerm)
             );
 
             displayEvents(filtered);
