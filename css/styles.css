@@ -1386,6 +1386,11 @@ a {
 .newsletter-btn {
     flex-shrink: 0;
     gap: 0.5rem;
+    min-width: 200px;
+    padding: 1rem 2rem;
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .newsletter-btn i {
@@ -1407,14 +1412,32 @@ a {
 @media (max-width: 576px) {
     .newsletter-form {
         flex-direction: column;
+        gap: var(--space-lg);
     }
 
     .newsletter-btn {
         width: 100%;
+        padding: 1rem 1.5rem;
+        min-width: auto;
+        font-size: 1rem;
+        justify-content: center;
+        min-height: 56px;
+    }
+
+    .newsletter-btn i {
+        font-size: 1.5rem;
     }
 
     .phone-input-wrapper {
         width: 100%;
+    }
+
+    .newsletter-title {
+        font-size: 1.75rem;
+    }
+
+    .newsletter-subtitle {
+        font-size: 0.9375rem;
     }
 }
 
