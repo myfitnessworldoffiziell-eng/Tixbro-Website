@@ -1,236 +1,469 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="utf-8">
-    <title>Tixbro - Company Dashboard</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tixbro - Event Organizer Dashboard</title>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <style>
-        .sidebar {
-            min-height: 100vh;
-            background: #2c3e50;
-            color: white;
-            padding: 20px 0;
-        }
-        .sidebar h3 {
-            color: white;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .sidebar .nav-link {
-            color: #ecf0f1;
-            padding: 15px 25px;
-            border-radius: 5px;
-            margin: 5px 15px;
-        }
-        .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            background: #34495e;
-            color: white;
-        }
-        .stats-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .stats-card h3 {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .event-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        .event-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-        .event-stat {
-            text-align: center;
-        }
-        .event-stat strong {
-            display: block;
-            font-size: 1.5rem;
-            color: #667eea;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar">
-                <h3>Tixbro</h3>
-                <p class="text-center text-muted" id="companyName">Loading...</p>
-                <nav class="nav flex-column">
-                    <a class="nav-link active" href="#" onclick="showSection('overview')"><i class="fas fa-home me-2"></i> Overview</a>
-                    <a class="nav-link" href="#" onclick="showSection('events')"><i class="fas fa-calendar me-2"></i> My Events</a>
-                    <a class="nav-link" href="create-event.html"><i class="fas fa-plus me-2"></i> Create Event</a>
-                    <a class="nav-link" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
-                </nav>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <h2 class="logo-text">Tixbro</h2>
+                <span class="logo-badge">Organizer</span>
             </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 p-4">
-                <!-- Overview Section -->
-                <div id="overviewSection">
-                    <h2 class="mb-4">Dashboard Overview</h2>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="stats-card">
-                                <i class="fas fa-ticket-alt fa-2x text-primary mb-3"></i>
-                                <p class="text-muted mb-0">Total Tickets Sold</p>
-                                <h3 id="totalTickets">0</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="stats-card">
-                                <i class="fas fa-rupee-sign fa-2x text-success mb-3"></i>
-                                <p class="text-muted mb-0">Total Revenue (INR)</p>
-                                <h3 id="totalRevenue">₹0</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="stats-card">
-                                <i class="fas fa-calendar-check fa-2x text-info mb-3"></i>
-                                <p class="text-muted mb-0">Active Events</p>
-                                <h3 id="activeEvents">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <a href="create-event.html" class="btn btn-primary btn-lg"><i class="fas fa-plus me-2"></i>Create New Event</a>
-                    </div>
-                </div>
-
-                <!-- Events Section -->
-                <div id="eventsSection" style="display: none;">
-                    <h2 class="mb-4">My Events</h2>
-                    <div id="eventsList"></div>
-                </div>
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                <img src="img/default-avatar.jpg" alt="User" id="userAvatar">
+                <span class="user-status"></span>
+            </div>
+            <div class="user-info">
+                <h4 class="user-name" id="userName">Loading...</h4>
+                <p class="user-email" id="userEmail">organizer@tixbro.com</p>
             </div>
         </div>
-    </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module">
-        import { checkAuth, logout as authLogout } from './js/auth.js';
-        import { getCompanyEvents } from './js/events.js';
+        <nav class="sidebar-nav">
+            <a href="#overview" class="nav-item active" data-section="overview">
+                <i class="fas fa-home"></i>
+                <span>Overview</span>
+            </a>
+            <a href="#events" class="nav-item" data-section="events">
+                <i class="fas fa-calendar-alt"></i>
+                <span>My Events</span>
+            </a>
+            <a href="#analytics" class="nav-item" data-section="analytics">
+                <i class="fas fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+            <a href="#create" class="nav-item nav-item-highlight" data-section="create">
+                <i class="fas fa-plus-circle"></i>
+                <span>Create Event</span>
+            </a>
+            <a href="#tickets" class="nav-item" data-section="tickets">
+                <i class="fas fa-ticket-alt"></i>
+                <span>Tickets</span>
+            </a>
+            <a href="#revenue" class="nav-item" data-section="revenue">
+                <i class="fas fa-rupee-sign"></i>
+                <span>Revenue</span>
+            </a>
+            <a href="#settings" class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
 
-        let currentUser = null;
+        <div class="sidebar-footer">
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
 
-        // Check authentication
-        checkAuth(async (authState) => {
-            if (!authState.isLoggedIn) {
-                window.location.href = 'login.html';
-                return;
-            }
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Top Bar -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-breadcrumb">
+                    <h1 class="page-title" id="pageTitle">Dashboard Overview</h1>
+                    <p class="page-subtitle" id="pageSubtitle">Welcome back! Here's what's happening with your events.</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search events..." id="searchInput">
+                </div>
+                <button class="header-icon-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="header-icon-btn theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
 
-            currentUser = authState;
-            document.getElementById('companyName').textContent = authState.companyData.companyName;
-            document.getElementById('totalTickets').textContent = authState.companyData.totalTicketsSold || 0;
-            document.getElementById('totalRevenue').textContent = '₹' + (authState.companyData.totalRevenue || 0).toFixed(2);
-
-            await loadEvents();
-        });
-
-        // Load company events
-        async function loadEvents() {
-            const result = await getCompanyEvents(currentUser.userId);
-
-            if (result.success) {
-                const activeEventsCount = result.events.filter(e => e.status === 'active').length;
-                document.getElementById('activeEvents').textContent = activeEventsCount;
-
-                displayEvents(result.events);
-            }
-        }
-
-        // Display events
-        function displayEvents(events) {
-            const eventsList = document.getElementById('eventsList');
-            if (events.length === 0) {
-                eventsList.innerHTML = '<p class="text-muted">No events yet. <a href="create-event.html">Create your first event</a></p>';
-                return;
-            }
-
-            eventsList.innerHTML = events.map(event => `
-                <div class="event-card">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4>${event.title}</h4>
-                            <p class="text-muted mb-0"><i class="fas fa-map-marker-alt me-2"></i>${event.city} | ${getCategoryName(event.category)}</p>
-                            <p class="text-muted mb-0"><i class="fas fa-calendar me-2"></i>${event.date} at ${event.time}</p>
+        <!-- Content Sections -->
+        <div class="dashboard-content">
+            <!-- Overview Section -->
+            <section class="content-section active" id="overviewSection">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card stat-card-primary">
+                        <div class="stat-icon">
+                            <i class="fas fa-ticket-alt"></i>
                         </div>
-                        <div>
-                            <span class="badge bg-${event.status === 'active' ? 'success' : 'secondary'}">${event.status}</span>
+                        <div class="stat-content">
+                            <p class="stat-label">Total Tickets Sold</p>
+                            <h3 class="stat-value" id="totalTicketsSold">0</h3>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 12% this month
+                            </span>
                         </div>
                     </div>
-                    <div class="event-stats">
-                        <div class="event-stat">
-                            <strong>${event.soldTickets}</strong>
-                            <small>Sold</small>
+
+                    <div class="stat-card stat-card-success">
+                        <div class="stat-icon">
+                            <i class="fas fa-rupee-sign"></i>
                         </div>
-                        <div class="event-stat">
-                            <strong>${event.availableTickets}</strong>
-                            <small>Available</small>
+                        <div class="stat-content">
+                            <p class="stat-label">Total Revenue</p>
+                            <h3 class="stat-value" id="totalRevenueDisplay">₹0</h3>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> ₹24,500 this week
+                            </span>
                         </div>
-                        <div class="event-stat">
-                            <strong>${event.views || 0}</strong>
-                            <small>Views</small>
+                    </div>
+
+                    <div class="stat-card stat-card-info">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
                         </div>
-                        <div class="event-stat">
-                            <strong>${event.clicks || 0}</strong>
-                            <small>Clicks</small>
+                        <div class="stat-content">
+                            <p class="stat-label">Active Events</p>
+                            <h3 class="stat-value" id="activeEventsCount">0</h3>
+                            <span class="stat-change neutral">
+                                <i class="fas fa-minus"></i> No change
+                            </span>
                         </div>
-                        <div class="event-stat">
-                            <strong>₹${(event.soldTickets * event.price * 0.9).toFixed(2)}</strong>
-                            <small>Revenue</small>
+                    </div>
+
+                    <div class="stat-card stat-card-warning">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-content">
+                            <p class="stat-label">Total Views</p>
+                            <h3 class="stat-value" id="totalViews">0</h3>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 2,340 this week
+                            </span>
                         </div>
                     </div>
                 </div>
-            `).join('');
-        }
 
-        // Helper function to get category display name
-        function getCategoryName(category) {
-            const categories = {
-                'movies': 'Movies',
-                'concerts': 'Concerts',
-                'sports': 'Sports Events',
-                'theatre': 'Theatre & Plays',
-                'turf': 'Turf Booking',
-                'college-fest': 'College Fests',
-                'bus': 'Bus Tickets',
-                'events': 'Events & More'
-            };
-            return categories[category] || category;
-        }
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <h3 class="chart-title">Revenue Overview</h3>
+                                <p class="chart-subtitle">Last 6 months performance</p>
+                            </div>
+                            <select class="chart-select">
+                                <option>Last 6 Months</option>
+                                <option>Last 3 Months</option>
+                                <option>This Year</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
 
-        // Show section
-        window.showSection = function(section) {
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-            event.target.classList.add('active');
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <h3 class="chart-title">Event Categories</h3>
+                                <p class="chart-subtitle">Distribution by type</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="categoriesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
 
-            document.getElementById('overviewSection').style.display = section === 'overview' ? 'block' : 'none';
-            document.getElementById('eventsSection').style.display = section === 'events' ? 'block' : 'none';
-        };
+                <!-- Quick Actions & Recent Events -->
+                <div class="dashboard-row">
+                    <div class="quick-actions-card">
+                        <h3 class="card-title">Quick Actions</h3>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action-btn" onclick="navigateToSection('create')">
+                                <div class="quick-action-icon create">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <span>Create Event</span>
+                            </button>
+                            <button class="quick-action-btn">
+                                <div class="quick-action-icon upload">
+                                    <i class="fas fa-upload"></i>
+                                </div>
+                                <span>Upload Images</span>
+                            </button>
+                            <button class="quick-action-btn">
+                                <div class="quick-action-icon ticket">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <span>Scan Tickets</span>
+                            </button>
+                            <button class="quick-action-btn">
+                                <div class="quick-action-icon report">
+                                    <i class="fas fa-file-download"></i>
+                                </div>
+                                <span>Export Report</span>
+                            </button>
+                        </div>
+                    </div>
 
-        // Logout
-        window.logout = async function() {
-            await authLogout();
-        };
-    </script>
+                    <div class="recent-events-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">Recent Events</h3>
+                            <a href="#events" class="view-all-link">View All →</a>
+                        </div>
+                        <div class="recent-events-list" id="recentEventsList">
+                            <!-- Events will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Events Section -->
+            <section class="content-section" id="eventsSection">
+                <div class="section-header-bar">
+                    <div>
+                        <h2 class="section-title">My Events</h2>
+                        <p class="section-description">Manage all your events in one place</p>
+                    </div>
+                    <div class="section-actions">
+                        <div class="filter-dropdown">
+                            <select id="eventFilter">
+                                <option value="all">All Events</option>
+                                <option value="active">Active</option>
+                                <option value="draft">Draft</option>
+                                <option value="past">Past</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="navigateToSection('create')">
+                            <i class="fas fa-plus"></i> Create Event
+                        </button>
+                    </div>
+                </div>
+
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Events will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section class="content-section" id="analyticsSection">
+                <h2 class="section-title">Analytics & Insights</h2>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h4>Ticket Sales Trend</h4>
+                        <canvas id="salesTrendChart"></canvas>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Audience Demographics</h4>
+                        <canvas id="demographicsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Create Event Section -->
+            <section class="content-section" id="createSection">
+                <div class="create-event-container">
+                    <h2 class="section-title">Create New Event</h2>
+                    <p class="section-description">Fill in the details to create your event</p>
+
+                    <form class="create-event-form" id="createEventForm">
+                        <div class="form-progress">
+                            <div class="progress-step active">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Basic Info</span>
+                            </div>
+                            <div class="progress-line"></div>
+                            <div class="progress-step">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Details</span>
+                            </div>
+                            <div class="progress-line"></div>
+                            <div class="progress-step">
+                                <span class="step-number">3</span>
+                                <span class="step-label">Tickets</span>
+                            </div>
+                            <div class="progress-line"></div>
+                            <div class="progress-step">
+                                <span class="step-number">4</span>
+                                <span class="step-label">Review</span>
+                            </div>
+                        </div>
+
+                        <!-- Form Steps -->
+                        <div class="form-step active" data-step="1">
+                            <div class="form-grid">
+                                <div class="form-group full-width">
+                                    <label for="eventTitle">Event Title *</label>
+                                    <input type="text" id="eventTitle" required placeholder="e.g., Sunburn Festival 2024">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="eventCategory">Category *</label>
+                                    <select id="eventCategory" required>
+                                        <option value="">Select Category</option>
+                                        <option value="concerts">Concerts</option>
+                                        <option value="sports">Sports</option>
+                                        <option value="theatre">Theatre</option>
+                                        <option value="college-fest">College Fest</option>
+                                        <option value="turf">Turf Booking</option>
+                                        <option value="movies">Movies</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="eventCity">City *</label>
+                                    <select id="eventCity" required>
+                                        <option value="">Select City</option>
+                                        <option value="mumbai">Mumbai</option>
+                                        <option value="delhi">Delhi</option>
+                                        <option value="bangalore">Bangalore</option>
+                                        <option value="pune">Pune</option>
+                                        <option value="hyderabad">Hyderabad</option>
+                                        <option value="chennai">Chennai</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="eventDate">Event Date *</label>
+                                    <input type="date" id="eventDate" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="eventTime">Start Time *</label>
+                                    <input type="time" id="eventTime" required>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="eventImage">Event Image *</label>
+                                    <div class="image-upload-area" id="imageUploadArea">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Drag & drop image here or click to browse</p>
+                                        <input type="file" id="eventImage" accept="image/*" hidden>
+                                        <div class="image-preview" id="imagePreview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-step" data-step="2">
+                            <div class="form-grid">
+                                <div class="form-group full-width">
+                                    <label for="eventDescription">Event Description *</label>
+                                    <textarea id="eventDescription" rows="5" required placeholder="Describe your event..."></textarea>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="eventVenue">Venue Name *</label>
+                                    <input type="text" id="eventVenue" required placeholder="e.g., Phoenix Marketcity">
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="eventAddress">Full Address *</label>
+                                    <input type="text" id="eventAddress" required placeholder="Complete venue address">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="eventDuration">Duration (hours)</label>
+                                    <input type="number" id="eventDuration" min="1" max="24" placeholder="e.g., 3">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="eventAgeLimit">Age Limit</label>
+                                    <select id="eventAgeLimit">
+                                        <option value="all">All Ages</option>
+                                        <option value="18+">18+</option>
+                                        <option value="21+">21+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-step" data-step="3">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="ticketPrice">Ticket Price (₹) *</label>
+                                    <input type="number" id="ticketPrice" required min="0" placeholder="e.g., 999">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="totalTickets">Total Tickets *</label>
+                                    <input type="number" id="totalTickets" required min="1" placeholder="e.g., 1000">
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label>
+                                        <input type="checkbox" id="earlyBird">
+                                        Enable Early Bird Discount
+                                    </label>
+                                </div>
+
+                                <div class="form-group early-bird-options" style="display: none;">
+                                    <label for="earlyBirdPrice">Early Bird Price (₹)</label>
+                                    <input type="number" id="earlyBirdPrice" min="0" placeholder="e.g., 799">
+                                </div>
+
+                                <div class="form-group early-bird-options" style="display: none;">
+                                    <label for="earlyBirdDeadline">Early Bird Deadline</label>
+                                    <input type="date" id="earlyBirdDeadline">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-step" data-step="4">
+                            <div class="event-preview" id="eventPreview">
+                                <h3>Review Your Event</h3>
+                                <div class="preview-content">
+                                    <!-- Preview will be generated here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" id="prevStepBtn" style="display: none;">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStepBtn">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="submitEventBtn" style="display: none;">
+                                <i class="fas fa-check"></i> Publish Event
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/dashboard.js"></script>
 </body>
 </html>
