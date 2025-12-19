@@ -5,6 +5,12 @@
   publish = "."
   functions = "netlify/functions"
 
+  # Environment variables for build process
+  [build.environment]
+    # Disable secrets scanning for Firebase client-side API keys
+    # Firebase API keys are public by design and protected by Security Rules
+    SECRETS_SCAN_SMART_DETECTION_ENABLED = "false"
+
 # Plugin to install function dependencies automatically
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
