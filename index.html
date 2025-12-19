@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,9 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- i18n Language Support -->
+    <script src="js/i18n.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -43,8 +46,7 @@
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
                     <i class="fas fa-moon"></i>
                 </button>
-                <a href="login.html" class="btn btn-outline">Sign In</a>
-                <a href="login.html" class="btn btn-primary">Sign Up</a>
+                <a href="javascript:void(0)" class="btn btn-primary" id="authButton" data-i18n="nav.signin">Sign In / Sign Up</a>
                 <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
                     <span></span>
                     <span></span>
@@ -56,14 +58,12 @@
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
-        <div class="hero-overlay"></div>
+        <div class="hero-overlay-strong"></div>
         <div class="hero-content">
-            <h1 class="hero-title">
-                Your City.<br>
-                Your Vibe.<br>
-                <span class="hero-highlight">Your Night Out.</span>
+            <h1 class="hero-title hero-title-vibrant">
+                <span class="hero-highlight-line" data-i18n="hero.title">Your Night Out.</span>
             </h1>
-            <p class="hero-subtitle">Discover the best events, concerts, sports & experiences across India</p>
+            <p class="hero-subtitle hero-subtitle-vibrant" data-i18n="hero.subtitle">Discover the best events, concerts, sports & experiences across India</p>
 
             <!-- Search Bar -->
             <div class="hero-search">
@@ -1428,7 +1428,7 @@
                 </div>
                 <form class="newsletter-form" id="newsletterForm">
                     <div class="phone-input-wrapper">
-                        <select class="country-code" id="countryCode">
+                        <select class="country-code country-code-compact" id="countryCode">
                             <option value="+91" selected>🇮🇳 India (+91)</option>
                             <option value="+971">🇦🇪 UAE (+971)</option>
                             <option value="+1">🇺🇸 USA (+1)</option>
@@ -1606,8 +1606,8 @@
                         </select>
                         <input type="tel" placeholder="Enter your phone number" class="newsletter-input phone-input" id="phoneNumber" pattern="[0-9]{10}" required>
                     </div>
-                    <button type="submit" class="btn btn-primary newsletter-btn">
-                        <i class="fab fa-whatsapp"></i> Subscribe Now
+                    <button type="submit" class="btn btn-primary newsletter-btn newsletter-btn-large">
+                        <i class="fab fa-whatsapp"></i> <span data-i18n="newsletter.button">Subscribe Now</span>
                     </button>
                 </form>
                 <p class="newsletter-privacy">
@@ -1689,6 +1689,7 @@
     </button>
 
     <!-- JavaScript -->
+    <script type="module" src="js/auth-redirect.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
