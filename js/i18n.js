@@ -317,6 +317,12 @@ const translations = {
         'footer.privacy': 'Privacy Policy',
         'footer.refund': 'Refund Policy',
         'footer.sitemap': 'Sitemap',
+
+        // Empty State Section
+        'empty.title': 'Be the First to List Your Event!',
+        'empty.subtitle': 'No events listed yet. Start by creating your first event on Tixbro.',
+        'empty.create': 'Create Your Event',
+        'empty.learn': 'Learn More',
     },
 
     hi: {
@@ -636,6 +642,12 @@ const translations = {
         'footer.privacy': 'गोपनीयता नीति',
         'footer.refund': 'रिफंड नीति',
         'footer.sitemap': 'साइटमैप',
+
+        // Empty State Section
+        'empty.title': 'अपना इवेंट लिस्ट करने वाले पहले बनें!',
+        'empty.subtitle': 'अभी तक कोई इवेंट लिस्ट नहीं किया गया। Tixbro पर अपना पहला इवेंट बनाकर शुरुआत करें।',
+        'empty.create': 'अपना इवेंट बनाएं',
+        'empty.learn': 'अधिक जानें',
     }
 };
 
