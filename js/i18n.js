@@ -317,6 +317,105 @@ const translations = {
         'footer.privacy': 'Privacy Policy',
         'footer.refund': 'Refund Policy',
         'footer.sitemap': 'Sitemap',
+
+        // FAQ Page
+        'faq.hero.title': 'Frequently Asked Questions',
+        'faq.hero.subtitle': 'Find answers to common questions about Tixbro',
+        'faq.search': 'Search for answers...',
+
+        // General Questions
+        'faq.general.title': 'General Questions',
+        'faq.general.q1': 'What is Tixbro?',
+        'faq.general.a1': 'Tixbro is India\'s premier online ticket booking platform for events, concerts, sports, theatre shows, turf bookings, college fests, and more. We connect event-goers with organizers, making ticket booking seamless, secure, and convenient.',
+        'faq.general.q2': 'In which cities is Tixbro available?',
+        'faq.general.a2': 'Tixbro is currently available across major cities in India including Mumbai, Delhi, Bangalore, Pune, Hyderabad, Chennai, Kolkata, Ahmedabad, Jaipur, Goa, Kochi, and Chandigarh. We\'re constantly expanding to new cities!',
+        'faq.general.q3': 'Do I need to create an account to book tickets?',
+        'faq.general.a3': 'Yes, you need to create a free Tixbro account to book tickets. This helps us manage your bookings, send you tickets, and provide better customer service. Registration is quick and only takes a minute!',
+        'faq.general.q4': 'Is Tixbro safe and secure?',
+        'faq.general.a4': 'Absolutely! Tixbro uses bank-grade encryption and secure payment gateways to protect your personal and financial information. All transactions are processed through trusted payment partners, and we never store your complete card details.',
+
+        // Booking & Payment
+        'faq.booking.title': 'Booking & Payment',
+        'faq.booking.q1': 'How do I book tickets on Tixbro?',
+        'faq.booking.a1': 'Booking is simple: 1) Browse or search for your event, 2) Select the date and number of tickets, 3) Fill in your details, 4) Make payment, 5) Receive instant confirmation via email and SMS with your e-ticket!',
+        'faq.booking.q2': 'What payment methods do you accept?',
+        'faq.booking.a2': 'We accept all major payment methods including Credit Cards (Visa, Mastercard, Amex), Debit Cards, UPI (Google Pay, PhonePe, Paytm), Net Banking, and Digital Wallets. All payments are processed securely.',
+        'faq.booking.q3': 'What are the service fees?',
+        'faq.booking.a3': 'Tixbro charges a small service fee (typically 10%) to cover platform maintenance, customer support, and secure payment processing. The exact fee is clearly displayed before you complete your purchase.',
+        'faq.booking.q4': 'Can I book multiple tickets in one transaction?',
+        'faq.booking.a4': 'Yes! You can book multiple tickets in a single transaction. However, some events may have a maximum ticket limit per booking to prevent scalping and ensure fair access for everyone.',
+        'faq.booking.q5': 'Why did my payment fail?',
+        'faq.booking.a5': 'Payment failures can occur due to insufficient funds, incorrect card details, bank server issues, or transaction limits. If money was deducted but you didn\'t receive tickets, don\'t worry! It will be automatically refunded within 5-7 business days. Contact support if you need assistance.',
+
+        // Tickets & Entry
+        'faq.tickets.title': 'Tickets & Entry',
+        'faq.tickets.q1': 'How will I receive my tickets?',
+        'faq.tickets.a1': 'You will receive your e-tickets instantly via email and SMS after successful payment. You can also view and download tickets from your Tixbro account under "My Bookings".',
+        'faq.tickets.q2': 'Do I need to print my ticket?',
+        'faq.tickets.a2': 'No printing required! Simply show the e-ticket on your mobile phone at the venue. Make sure your phone has sufficient battery and screen brightness. However, some organizers may prefer printed tickets, so check event details.',
+        'faq.tickets.q3': 'What is the QR code on my ticket?',
+        'faq.tickets.a3': 'The QR code is your unique ticket identifier. It will be scanned at the venue entrance for verification. Each QR code can only be used once, so don\'t share screenshots of your ticket with others!',
+        'faq.tickets.q4': 'Can I transfer my ticket to someone else?',
+        'faq.tickets.a4': 'Ticket transfer policies vary by event. Some events allow transfers through your Tixbro account, while others require the original ticket holder to attend. Check the specific event\'s terms or contact support.',
+        'faq.tickets.q5': 'What if I lose my ticket or can\'t access my email?',
+        'faq.tickets.a5': 'No worries! Simply log in to your Tixbro account and go to "My Bookings" to download your ticket again. You can also contact our customer support with your booking ID for assistance.',
+        'faq.tickets.q6': 'Do I need ID proof at the venue?',
+        'faq.tickets.a6': 'Some events require valid photo ID (Aadhaar, PAN, Passport, Driving License) matching the name on the ticket. This is especially common for high-demand events to prevent scalping. Check your event details for specific requirements.',
+
+        // Refunds & Cancellations
+        'faq.refunds.title': 'Refunds & Cancellations',
+        'faq.refunds.q1': 'Can I cancel my ticket and get a refund?',
+        'faq.refunds.a1': 'Most tickets are non-refundable unless the event is cancelled by the organizer. However, specific refund policies vary by event type. For turf bookings, cancellations 24+ hours in advance get 75% refund. Check our detailed Refund Policy page.',
+        'faq.refunds.q2': 'What happens if an event is cancelled?',
+        'faq.refunds.a2': 'If an event is cancelled by the organizer, you will receive a full refund including service fees within 7-10 business days. You\'ll be notified via email and SMS about the cancellation and refund status.',
+        'faq.refunds.q3': 'How long does a refund take?',
+        'faq.refunds.a3': 'Refunds are processed within 7-10 business days from approval. Depending on your payment method, it may take additional 5-7 days to reflect in your account. Credit/Debit cards: 7-14 days, UPI/Net Banking: 5-10 days, Wallets: 3-7 days.',
+        'faq.refunds.q4': 'Are service fees refundable?',
+        'faq.refunds.a4': 'Service fees are generally non-refundable for user-initiated cancellations. However, if the event is cancelled by the organizer, you\'ll receive a full refund including service fees.',
+
+        // Account & Security
+        'faq.account.title': 'Account & Security',
+        'faq.account.q1': 'How do I create a Tixbro account?',
+        'faq.account.a1': 'Click on "Sign Up" on our website or app, provide your email/phone number, create a password, and verify your account. You can also sign up quickly using Google or Facebook login.',
+        'faq.account.q2': 'I forgot my password. How do I reset it?',
+        'faq.account.a2': 'Click on "Forgot Password" on the login page, enter your registered email/phone number, and you\'ll receive a password reset link. Follow the instructions to create a new password.',
+        'faq.account.q3': 'How do I update my profile information?',
+        'faq.account.a3': 'Log in to your account, go to "My Profile" or "Settings", and update your personal information such as name, email, phone number, or address. Make sure to save changes.',
+        'faq.account.q4': 'Is my payment information stored?',
+        'faq.account.a4': 'No, Tixbro does not store your complete card details. All payment information is securely processed through our payment gateway partners. We never have access to your full card number or CVV.',
+        'faq.account.q5': 'Can I delete my account?',
+        'faq.account.a5': 'Yes, you can request account deletion by contacting our support team at support@tixbro.com. Please note that you cannot delete your account if you have upcoming event bookings.',
+
+        // For Event Organizers
+        'faq.organizers.title': 'For Event Organizers',
+        'faq.organizers.q1': 'How can I list my event on Tixbro?',
+        'faq.organizers.a1': 'Create an organizer account, click "Create Event", fill in event details (title, description, date, venue, pricing), upload images, and submit for approval. Our team will review and list your event within 24-48 hours.',
+        'faq.organizers.q2': 'What commission does Tixbro charge?',
+        'faq.organizers.a2': 'Tixbro charges a 10% commission on ticket sales. This covers platform usage, payment processing, customer support, and marketing. You receive 90% of the ticket price directly to your account.',
+        'faq.organizers.q3': 'When do I receive payment for ticket sales?',
+        'faq.organizers.a3': 'Payments are transferred to your registered bank account within 7 days after the event concludes. This ensures smooth refund processing if the event is cancelled or postponed.',
+        'faq.organizers.q4': 'Can I track ticket sales in real-time?',
+        'faq.organizers.a4': 'Yes! Your organizer dashboard provides real-time analytics including tickets sold, revenue, customer demographics, and booking trends. You can export reports anytime.',
+        'faq.organizers.q5': 'What if I need to cancel or reschedule my event?',
+        'faq.organizers.a5': 'Contact Tixbro support immediately. For cancellations, you\'re responsible for full refunds. For rescheduling, update the event date in your dashboard, and all ticket holders will be automatically notified.',
+
+        // Technical Issues
+        'faq.technical.title': 'Technical Issues',
+        'faq.technical.q1': 'The website is not loading. What should I do?',
+        'faq.technical.a1': 'Try clearing your browser cache and cookies, or use a different browser. Make sure you have a stable internet connection. If the problem persists, try accessing from the mobile app or contact support.',
+        'faq.technical.q2': 'I\'m not receiving booking confirmation emails',
+        'faq.technical.a2': 'Check your spam/junk folder. Add support@tixbro.com to your contacts. Verify that the email address in your profile is correct. You can also access tickets from "My Bookings" in your account.',
+        'faq.technical.q3': 'The mobile app is crashing. How do I fix it?',
+        'faq.technical.a3': 'Update to the latest app version from Play Store/App Store. Clear app cache from your phone settings. If issues continue, uninstall and reinstall the app. Your bookings and account data will remain safe.',
+        'faq.technical.q4': 'I received a duplicate charge. What now?',
+        'faq.technical.a4': 'Contact our support team immediately at support@tixbro.com with proof of duplicate charges (bank statement/transaction screenshot). Duplicate amounts will be refunded within 5-7 business days after verification.',
+
+        // Contact
+        'faq.contact.title': 'Still have questions?',
+        'faq.contact.subtitle': 'Our support team is here to help!',
+        'faq.contact.email': 'Email:',
+        'faq.contact.phone': 'Phone:',
+        'faq.contact.hours': 'Hours: Mon-Sat, 9 AM - 9 PM IST',
     },
 
     hi: {
@@ -636,6 +735,105 @@ const translations = {
         'footer.privacy': 'गोपनीयता नीति',
         'footer.refund': 'रिफंड नीति',
         'footer.sitemap': 'साइटमैप',
+
+        // FAQ Page
+        'faq.hero.title': 'अक्सर पूछे जाने वाले प्रश्न',
+        'faq.hero.subtitle': 'Tixbro के बारे में सामान्य प्रश्नों के उत्तर खोजें',
+        'faq.search': 'उत्तर खोजें...',
+
+        // General Questions
+        'faq.general.title': 'सामान्य प्रश्न',
+        'faq.general.q1': 'Tixbro क्या है?',
+        'faq.general.a1': 'Tixbro भारत का प्रमुख ऑनलाइन टिकट बुकिंग प्लेटफॉर्म है जो इवेंट्स, कॉन्सर्ट, खेल, थिएटर शो, टर्फ बुकिंग, कॉलेज फेस्ट आदि के लिए है। हम इवेंट प्रेमियों को आयोजकों से जोड़ते हैं, टिकट बुकिंग को सहज, सुरक्षित और सुविधाजनक बनाते हैं।',
+        'faq.general.q2': 'Tixbro किन शहरों में उपलब्ध है?',
+        'faq.general.a2': 'Tixbro वर्तमान में भारत के प्रमुख शहरों में उपलब्ध है जिनमें मुंबई, दिल्ली, बेंगलुरु, पुणे, हैदराबाद, चेन्नई, कोलकाता, अहमदाबाद, जयपुर, गोवा, कोच्चि और चंडीगढ़ शामिल हैं। हम लगातार नए शहरों में विस्तार कर रहे हैं!',
+        'faq.general.q3': 'क्या मुझे टिकट बुक करने के लिए खाता बनाना होगा?',
+        'faq.general.a3': 'हां, टिकट बुक करने के लिए आपको एक मुफ्त Tixbro खाता बनाना होगा। यह हमें आपकी बुकिंग प्रबंधित करने, टिकट भेजने और बेहतर ग्राहक सेवा प्रदान करने में मदद करता है। पंजीकरण त्वरित है और केवल एक मिनट लगता है!',
+        'faq.general.q4': 'क्या Tixbro सुरक्षित है?',
+        'faq.general.a4': 'बिल्कुल! Tixbro आपकी व्यक्तिगत और वित्तीय जानकारी की सुरक्षा के लिए बैंक-ग्रेड एन्क्रिप्शन और सुरक्षित भुगतान गेटवे का उपयोग करता है। सभी लेनदेन विश्वसनीय भुगतान भागीदारों के माध्यम से संसाधित किए जाते हैं, और हम आपके पूर्ण कार्ड विवरण कभी संग्रहीत नहीं करते हैं।',
+
+        // Booking & Payment
+        'faq.booking.title': 'बुकिंग और भुगतान',
+        'faq.booking.q1': 'मैं Tixbro पर टिकट कैसे बुक करूं?',
+        'faq.booking.a1': 'बुकिंग सरल है: 1) अपना इवेंट ब्राउज़ करें या खोजें, 2) तारीख और टिकट की संख्या चुनें, 3) अपना विवरण भरें, 4) भुगतान करें, 5) अपनी ई-टिकट के साथ ईमेल और SMS के माध्यम से तत्काल पुष्टि प्राप्त करें!',
+        'faq.booking.q2': 'आप कौन से भुगतान विधियां स्वीकार करते हैं?',
+        'faq.booking.a2': 'हम सभी प्रमुख भुगतान विधियों को स्वीकार करते हैं जिनमें क्रेडिट कार्ड (Visa, Mastercard, Amex), डेबिट कार्ड, UPI (Google Pay, PhonePe, Paytm), नेट बैंकिंग और डिजिटल वॉलेट शामिल हैं। सभी भुगतान सुरक्षित रूप से संसाधित किए जाते हैं।',
+        'faq.booking.q3': 'सेवा शुल्क क्या हैं?',
+        'faq.booking.a3': 'Tixbro प्लेटफॉर्म रखरखाव, ग्राहक सहायता और सुरक्षित भुगतान प्रसंस्करण को कवर करने के लिए एक छोटा सेवा शुल्क (आमतौर पर 10%) लेता है। सटीक शुल्क आपकी खरीदारी पूरी करने से पहले स्पष्ट रूप से प्रदर्शित किया जाता है।',
+        'faq.booking.q4': 'क्या मैं एक लेनदेन में कई टिकट बुक कर सकता हूं?',
+        'faq.booking.a4': 'हां! आप एक ही लेनदेन में कई टिकट बुक कर सकते हैं। हालांकि, कुछ इवेंट्स में स्कैल्पिंग को रोकने और सभी के लिए उचित पहुंच सुनिश्चित करने के लिए प्रति बुकिंग अधिकतम टिकट सीमा हो सकती है।',
+        'faq.booking.q5': 'मेरा भुगतान क्यों विफल हुआ?',
+        'faq.booking.a5': 'भुगतान विफलता अपर्याप्त धन, गलत कार्ड विवरण, बैंक सर्वर समस्याओं या लेनदेन सीमा के कारण हो सकती है। यदि पैसा काटा गया लेकिन आपको टिकट नहीं मिले, तो चिंता न करें! यह 5-7 व्यावसायिक दिनों के भीतर स्वचालित रूप से वापस कर दिया जाएगा। यदि आपको सहायता की आवश्यकता है तो सपोर्ट से संपर्क करें।',
+
+        // Tickets & Entry
+        'faq.tickets.title': 'टिकट और प्रवेश',
+        'faq.tickets.q1': 'मुझे अपने टिकट कैसे मिलेंगे?',
+        'faq.tickets.a1': 'सफल भुगतान के बाद आपको ईमेल और SMS के माध्यम से तुरंत अपनी ई-टिकट प्राप्त होंगी। आप "My Bookings" के तहत अपने Tixbro खाते से टिकट देख और डाउनलोड भी कर सकते हैं।',
+        'faq.tickets.q2': 'क्या मुझे अपना टिकट प्रिंट करना होगा?',
+        'faq.tickets.a2': 'प्रिंटिंग की कोई आवश्यकता नहीं! बस स्थल पर अपने मोबाइल फोन पर ई-टिकट दिखाएं। सुनिश्चित करें कि आपके फोन में पर्याप्त बैटरी और स्क्रीन ब्राइटनेस है। हालांकि, कुछ आयोजक प्रिंटेड टिकट पसंद कर सकते हैं, इसलिए इवेंट विवरण जांचें।',
+        'faq.tickets.q3': 'मेरे टिकट पर QR कोड क्या है?',
+        'faq.tickets.a3': 'QR कोड आपका अद्वितीय टिकट पहचानकर्ता है। सत्यापन के लिए स्थल के प्रवेश द्वार पर इसे स्कैन किया जाएगा। प्रत्येक QR कोड का उपयोग केवल एक बार किया जा सकता है, इसलिए अपने टिकट के स्क्रीनशॉट दूसरों के साथ साझा न करें!',
+        'faq.tickets.q4': 'क्या मैं अपना टिकट किसी और को ट्रांसफर कर सकता हूं?',
+        'faq.tickets.a4': 'टिकट ट्रांसफर नीतियां इवेंट के अनुसार भिन्न होती हैं। कुछ इवेंट्स आपके Tixbro खाते के माध्यम से ट्रांसफर की अनुमति देते हैं, जबकि अन्य को मूल टिकट धारक की उपस्थिति की आवश्यकता होती है। विशिष्ट इवेंट की शर्तें जांचें या सहायता से संपर्क करें।',
+        'faq.tickets.q5': 'यदि मैं अपना टिकट खो दूं या अपनी ईमेल तक पहुंच नहीं कर सकता तो क्या होगा?',
+        'faq.tickets.a5': 'कोई चिंता नहीं! बस अपने Tixbro खाते में लॉग इन करें और अपना टिकट फिर से डाउनलोड करने के लिए "My Bookings" पर जाएं। आप सहायता के लिए अपनी बुकिंग ID के साथ हमारी ग्राहक सहायता से भी संपर्क कर सकते हैं।',
+        'faq.tickets.q6': 'क्या मुझे स्थल पर ID प्रूफ की आवश्यकता है?',
+        'faq.tickets.a6': 'कुछ इवेंट्स में टिकट पर नाम से मेल खाने वाले वैध फोटो ID (आधार, पैन, पासपोर्ट, ड्राइविंग लाइसेंस) की आवश्यकता होती है। यह विशेष रूप से उच्च मांग वाले इवेंट्स के लिए स्कैल्पिंग को रोकने के लिए आम है। विशिष्ट आवश्यकताओं के लिए अपने इवेंट विवरण की जांच करें।',
+
+        // Refunds & Cancellations
+        'faq.refunds.title': 'रिफंड और रद्दीकरण',
+        'faq.refunds.q1': 'क्या मैं अपना टिकट रद्द करके रिफंड प्राप्त कर सकता हूं?',
+        'faq.refunds.a1': 'अधिकांश टिकट गैर-वापसी योग्य हैं जब तक कि आयोजक द्वारा इवेंट रद्द नहीं किया जाता है। हालांकि, विशिष्ट रिफंड नीतियां इवेंट प्रकार के अनुसार भिन्न होती हैं। टर्फ बुकिंग के लिए, 24+ घंटे पहले रद्द करने पर 75% रिफंड मिलता है। हमारे विस्तृत रिफंड पॉलिसी पेज को देखें।',
+        'faq.refunds.q2': 'यदि कोई इवेंट रद्द हो जाता है तो क्या होगा?',
+        'faq.refunds.a2': 'यदि आयोजक द्वारा इवेंट रद्द किया जाता है, तो आपको 7-10 व्यावसायिक दिनों के भीतर सेवा शुल्क सहित पूर्ण रिफंड प्राप्त होगा। रद्दीकरण और रिफंड स्थिति के बारे में आपको ईमेल और SMS के माध्यम से सूचित किया जाएगा।',
+        'faq.refunds.q3': 'रिफंड में कितना समय लगता है?',
+        'faq.refunds.a3': 'रिफंड स्वीकृति से 7-10 व्यावसायिक दिनों के भीतर संसाधित किए जाते हैं। आपकी भुगतान विधि के आधार पर, आपके खाते में प्रतिबिंबित होने में अतिरिक्त 5-7 दिन लग सकते हैं। क्रेडिट/डेबिट कार्ड: 7-14 दिन, UPI/नेट बैंकिंग: 5-10 दिन, वॉलेट: 3-7 दिन।',
+        'faq.refunds.q4': 'क्या सेवा शुल्क वापसी योग्य हैं?',
+        'faq.refunds.a4': 'उपयोगकर्ता द्वारा शुरू किए गए रद्दीकरण के लिए सेवा शुल्क आमतौर पर गैर-वापसी योग्य होते हैं। हालांकि, यदि आयोजक द्वारा इवेंट रद्द किया जाता है, तो आपको सेवा शुल्क सहित पूर्ण रिफंड प्राप्त होगा।',
+
+        // Account & Security
+        'faq.account.title': 'खाता और सुरक्षा',
+        'faq.account.q1': 'मैं Tixbro खाता कैसे बनाऊं?',
+        'faq.account.a1': 'हमारी वेबसाइट या ऐप पर "Sign Up" पर क्लिक करें, अपना ईमेल/फोन नंबर प्रदान करें, एक पासवर्ड बनाएं और अपने खाते को सत्यापित करें। आप Google या Facebook लॉगिन का उपयोग करके भी जल्दी से साइन अप कर सकते हैं।',
+        'faq.account.q2': 'मैं अपना पासवर्ड भूल गया। मैं इसे कैसे रीसेट करूं?',
+        'faq.account.a2': 'लॉगिन पेज पर "Forgot Password" पर क्लिक करें, अपना पंजीकृत ईमेल/फोन नंबर दर्ज करें, और आपको एक पासवर्ड रीसेट लिंक प्राप्त होगा। एक नया पासवर्ड बनाने के लिए निर्देशों का पालन करें।',
+        'faq.account.q3': 'मैं अपनी प्रोफ़ाइल जानकारी कैसे अपडेट करूं?',
+        'faq.account.a3': 'अपने खाते में लॉग इन करें, "My Profile" या "Settings" पर जाएं, और अपनी व्यक्तिगत जानकारी जैसे नाम, ईमेल, फोन नंबर या पता अपडेट करें। परिवर्तन सहेजना सुनिश्चित करें।',
+        'faq.account.q4': 'क्या मेरी भुगतान जानकारी संग्रहीत है?',
+        'faq.account.a4': 'नहीं, Tixbro आपके पूर्ण कार्ड विवरण संग्रहीत नहीं करता है। सभी भुगतान जानकारी हमारे भुगतान गेटवे भागीदारों के माध्यम से सुरक्षित रूप से संसाधित की जाती है। हमारे पास आपके पूर्ण कार्ड नंबर या CVV तक कभी पहुंच नहीं होती है।',
+        'faq.account.q5': 'क्या मैं अपना खाता हटा सकता हूं?',
+        'faq.account.a5': 'हां, आप support@tixbro.com पर हमारी सहायता टीम से संपर्क करके खाता हटाने का अनुरोध कर सकते हैं। कृपया ध्यान दें कि यदि आपके पास आगामी इवेंट बुकिंग हैं तो आप अपना खाता हटा नहीं सकते हैं।',
+
+        // For Event Organizers
+        'faq.organizers.title': 'इवेंट आयोजकों के लिए',
+        'faq.organizers.q1': 'मैं Tixbro पर अपना इवेंट कैसे सूचीबद्ध कर सकता हूं?',
+        'faq.organizers.a1': 'एक आयोजक खाता बनाएं, "Create Event" पर क्लिक करें, इवेंट विवरण (शीर्षक, विवरण, तारीख, स्थान, मूल्य निर्धारण) भरें, छवियां अपलोड करें और अनुमोदन के लिए सबमिट करें। हमारी टीम 24-48 घंटों के भीतर आपके इवेंट की समीक्षा करके सूचीबद्ध करेगी।',
+        'faq.organizers.q2': 'Tixbro कितना कमीशन लेता है?',
+        'faq.organizers.a2': 'Tixbro टिकट बिक्री पर 10% कमीशन लेता है। यह प्लेटफॉर्म उपयोग, भुगतान प्रसंस्करण, ग्राहक सहायता और मार्केटिंग को कवर करता है। आपको टिकट मूल्य का 90% सीधे अपने खाते में प्राप्त होता है।',
+        'faq.organizers.q3': 'मुझे टिकट बिक्री के लिए भुगतान कब प्राप्त होगा?',
+        'faq.organizers.a3': 'इवेंट समाप्त होने के 7 दिनों के भीतर भुगतान आपके पंजीकृत बैंक खाते में स्थानांतरित कर दिया जाता है। यह सुनिश्चित करता है कि यदि इवेंट रद्द या स्थगित किया जाता है तो सुचारू रिफंड प्रसंस्करण हो।',
+        'faq.organizers.q4': 'क्या मैं टिकट बिक्री को वास्तविक समय में ट्रैक कर सकता हूं?',
+        'faq.organizers.a4': 'हां! आपका आयोजक डैशबोर्ड वास्तविक समय विश्लेषण प्रदान करता है जिसमें बेचे गए टिकट, राजस्व, ग्राहक जनसांख्यिकी और बुकिंग रुझान शामिल हैं। आप किसी भी समय रिपोर्ट निर्यात कर सकते हैं।',
+        'faq.organizers.q5': 'यदि मुझे अपना इवेंट रद्द या पुनर्निर्धारित करना है तो क्या होगा?',
+        'faq.organizers.a5': 'तुरंत Tixbro सपोर्ट से संपर्क करें। रद्दीकरण के लिए, आप पूर्ण रिफंड के लिए जिम्मेदार हैं। पुनर्निर्धारण के लिए, अपने डैशबोर्ड में इवेंट तारीख अपडेट करें, और सभी टिकट धारकों को स्वचालित रूप से सूचित किया जाएगा।',
+
+        // Technical Issues
+        'faq.technical.title': 'तकनीकी समस्याएं',
+        'faq.technical.q1': 'वेबसाइट लोड नहीं हो रही है। मुझे क्या करना चाहिए?',
+        'faq.technical.a1': 'अपने ब्राउज़र कैश और कुकीज़ साफ करने का प्रयास करें, या एक अलग ब्राउज़र का उपयोग करें। सुनिश्चित करें कि आपके पास स्थिर इंटरनेट कनेक्शन है। यदि समस्या बनी रहती है, तो मोबाइल ऐप से एक्सेस करने या सपोर्ट से संपर्क करने का प्रयास करें।',
+        'faq.technical.q2': 'मुझे बुकिंग पुष्टि ईमेल नहीं मिल रहे हैं',
+        'faq.technical.a2': 'अपने स्पैम/जंक फ़ोल्डर की जांच करें। अपने संपर्कों में support@tixbro.com जोड़ें। सत्यापित करें कि आपकी प्रोफ़ाइल में ईमेल पता सही है। आप अपने खाते में "My Bookings" से भी टिकट एक्सेस कर सकते हैं।',
+        'faq.technical.q3': 'मोबाइल ऐप क्रैश हो रहा है। मैं इसे कैसे ठीक करूं?',
+        'faq.technical.a3': 'Play Store/App Store से नवीनतम ऐप संस्करण में अपडेट करें। अपने फोन सेटिंग्स से ऐप कैश साफ करें। यदि समस्याएं जारी रहती हैं, तो ऐप को अनइंस्टॉल और फिर से इंस्टॉल करें। आपकी बुकिंग और खाता डेटा सुरक्षित रहेगा।',
+        'faq.technical.q4': 'मुझे एक डुप्लिकेट चार्ज मिला। अब क्या?',
+        'faq.technical.a4': 'डुप्लिकेट चार्ज के प्रमाण (बैंक स्टेटमेंट/लेनदेन स्क्रीनशॉट) के साथ तुरंत support@tixbro.com पर हमारी सहायता टीम से संपर्क करें। सत्यापन के बाद डुप्लिकेट राशि 5-7 व्यावसायिक दिनों के भीतर वापस कर दी जाएगी।',
+
+        // Contact
+        'faq.contact.title': 'अभी भी प्रश्न हैं?',
+        'faq.contact.subtitle': 'हमारी सहायता टीम मदद के लिए यहां है!',
+        'faq.contact.email': 'ईमेल:',
+        'faq.contact.phone': 'फोन:',
+        'faq.contact.hours': 'समय: सोमवार-शनिवार, सुबह 9 - रात 9 IST',
     }
 };
 

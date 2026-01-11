@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frequently Asked Questions - Tixbro Ticket Booking Platform">
+    <title>FAQ - Tixbro</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <style>
+        .faq-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-btn {
+            padding: 1rem;
+            background: var(--surface);
+            border: 2px solid transparent;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .category-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .faq-section {
+            margin-bottom: 2rem;
+        }
+
+        .faq-section-title {
+            color: var(--primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-accordion {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--surface);
+        }
+
+        .faq-question.active {
+            color: var(--primary);
+            background: var(--surface);
+        }
+
+        .faq-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+            color: var(--primary);
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer.active {
+            max-height: 1000px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--radius-lg);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .language-switch {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .lang-btn {
+            padding: 0.75rem 2rem;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .contact-help {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-xl);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-help h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .contact-help a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="../index.html" class="nav-logo">
+                    <span class="logo-text">Tixbro</span>
+                </a>
+            </div>
+
+            <div class="nav-center">
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../shop.html" class="nav-link">Events</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="../login.html" class="btn btn-outline">Sign In</a>
+                <a href="../login.html" class="btn btn-primary">Sign Up</a>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="min-height: 40vh;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="faq.hero.title">Frequently Asked Questions</h1>
+            <p class="hero-subtitle" data-i18n="faq.hero.subtitle">Find answers to common questions about Tixbro</p>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="section">
+        <div class="container">
+            <div class="faq-content">
+                <!-- Language Switch -->
+                <div class="language-switch">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी (Hindi)</button>
+                </div>
+
+                <!-- Search Box -->
+                <div class="search-box">
+                    <input type="text" class="search-input" id="faqSearch" data-i18n-placeholder="faq.search" placeholder="Search for answers...">
+                </div>
+
+                <!-- General Questions -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">
+                        <i class="fas fa-question-circle"></i>
+                        <span data-i18n="faq.general.title">General Questions</span>
+                    </h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.general.q1">What is Tixbro?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.general.a1">
+                                    Tixbro is India's premier online ticket booking platform for events, concerts, sports, theatre shows, turf bookings, college fests, and more. We connect event-goers with organizers, making ticket booking seamless, secure, and convenient.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.general.q2">In which cities is Tixbro available?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.general.a2">
+                                    Tixbro is currently available across major cities in India including Mumbai, Delhi, Bangalore, Pune, Hyderabad, Chennai, Kolkata, Ahmedabad, Jaipur, Goa, Kochi, and Chandigarh. We're constantly expanding to new cities!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.general.q3">Do I need to create an account to book tickets?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.general.a3">
+                                    Yes, you need to create a free Tixbro account to book tickets. This helps us manage your bookings, send you tickets, and provide better customer service. Registration is quick and only takes a minute!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.general.q4">Is Tixbro safe and secure?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.general.a4">
+                                    Absolutely! Tixbro uses bank-grade encryption and secure payment gateways to protect your personal and financial information. All transactions are processed through trusted payment partners, and we never store your complete card details.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking & Payment -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">
+                        <i class="fas fa-credit-card"></i>
+                        <span data-i18n="faq.booking.title">Booking & Payment</span>
+                    </h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.booking.q1">How do I book tickets on Tixbro?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.booking.a1">
+                                    Booking is simple: 1) Browse or search for your event, 2) Select the date and number of tickets, 3) Fill in your details, 4) Make payment, 5) Receive instant confirmation via email and SMS with your e-ticket!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.booking.q2">What payment methods do you accept?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.booking.a2">
+                                    We accept all major payment methods including Credit Cards (Visa, Mastercard, Amex), Debit Cards, UPI (Google Pay, PhonePe, Paytm), Net Banking, and Digital Wallets. All payments are processed securely.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.booking.q3">What are the service fees?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.booking.a3">
+                                    Tixbro charges a small service fee (typically 10%) to cover platform maintenance, customer support, and secure payment processing. The exact fee is clearly displayed before you complete your purchase.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.booking.q4">Can I book multiple tickets in one transaction?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.booking.a4">
+                                    Yes! You can book multiple tickets in a single transaction. However, some events may have a maximum ticket limit per booking to prevent scalping and ensure fair access for everyone.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.booking.q5">Why did my payment fail?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.booking.a5">
+                                    Payment failures can occur due to insufficient funds, incorrect card details, bank server issues, or transaction limits. If money was deducted but you didn't receive tickets, don't worry! It will be automatically refunded within 5-7 business days. Contact support if you need assistance.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tickets & Entry -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span data-i18n="faq.tickets.title">Tickets & Entry</span>
+                    </h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.tickets.q1">How will I receive my tickets?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.tickets.a1">
+                                    You will receive your e-tickets instantly via email and SMS after successful payment. You can also view and download tickets from your Tixbro account under "My Bookings".
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.tickets.q2">Do I need to print my ticket?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.tickets.a2">
+                                    No printing required! Simply show the e-ticket on your mobile phone at the venue. Make sure your phone has sufficient battery and screen brightness. However, some organizers may prefer printed tickets, so check event details.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.tickets.q3">What is the QR code on my ticket?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.tickets.a3">
+                                    The QR code is your unique ticket identifier. It will be scanned at the venue entrance for verification. Each QR code can only be used once, so don't share screenshots of your ticket with others!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.tickets.q4">Can I transfer my ticket to someone else?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.tickets.a4">
+                                    Ticket transfer policies vary by event. Some events allow transfers through your Tixbro account, while others require the original ticket holder to attend. Check the specific event's terms or contact support.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.tickets.q5">What if I lose my ticket or can't access my email?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.tickets.a5">
+                                    No worries! Simply log in to your Tixbro account and go to "My Bookings" to download your ticket again. You can also contact our customer support with your booking ID for assistance.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.tickets.q6">Do I need ID proof at the venue?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.tickets.a6">
+                                    Some events require valid photo ID (Aadhaar, PAN, Passport, Driving License) matching the name on the ticket. This is especially common for high-demand events to prevent scalping. Check your event details for specific requirements.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Refunds & Cancellations -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">
+                        <i class="fas fa-undo"></i>
+                        <span data-i18n="faq.refunds.title">Refunds & Cancellations</span>
+                    </h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.refunds.q1">Can I cancel my ticket and get a refund?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.refunds.a1">
+                                    Most tickets are non-refundable unless the event is cancelled by the organizer. However, specific refund policies vary by event type. For turf bookings, cancellations 24+ hours in advance get 75% refund. Check our detailed Refund Policy page.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.refunds.q2">What happens if an event is cancelled?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.refunds.a2">
+                                    If an event is cancelled by the organizer, you will receive a full refund including service fees within 7-10 business days. You'll be notified via email and SMS about the cancellation and refund status.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.refunds.q3">How long does a refund take?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.refunds.a3">
+                                    Refunds are processed within 7-10 business days from approval. Depending on your payment method, it may take additional 5-7 days to reflect in your account. Credit/Debit cards: 7-14 days, UPI/Net Banking: 5-10 days, Wallets: 3-7 days.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.refunds.q4">Are service fees refundable?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.refunds.a4">
+                                    Service fees are generally non-refundable for user-initiated cancellations. However, if the event is cancelled by the organizer, you'll receive a full refund including service fees.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account & Security -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">
+                        <i class="fas fa-user-shield"></i>
+                        <span data-i18n="faq.account.title">Account & Security</span>
+                    </h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.account.q1">How do I create a Tixbro account?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.account.a1">
+                                    Click on "Sign Up" on our website or app, provide your email/phone number, create a password, and verify your account. You can also sign up quickly using Google or Facebook login.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.account.q2">I forgot my password. How do I reset it?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.account.a2">
+                                    Click on "Forgot Password" on the login page, enter your registered email/phone number, and you'll receive a password reset link. Follow the instructions to create a new password.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.account.q3">How do I update my profile information?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.account.a3">
+                                    Log in to your account, go to "My Profile" or "Settings", and update your personal information such as name, email, phone number, or address. Make sure to save changes.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.account.q4">Is my payment information stored?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.account.a4">
+                                    No, Tixbro does not store your complete card details. All payment information is securely processed through our payment gateway partners. We never have access to your full card number or CVV.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.account.q5">Can I delete my account?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.account.a5">
+                                    Yes, you can request account deletion by contacting our support team at support@tixbro.com. Please note that you cannot delete your account if you have upcoming event bookings.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For Event Organizers -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">
+                        <i class="fas fa-users-cog"></i>
+                        <span data-i18n="faq.organizers.title">For Event Organizers</span>
+                    </h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.organizers.q1">How can I list my event on Tixbro?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.organizers.a1">
+                                    Create an organizer account, click "Create Event", fill in event details (title, description, date, venue, pricing), upload images, and submit for approval. Our team will review and list your event within 24-48 hours.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.organizers.q2">What commission does Tixbro charge?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.organizers.a2">
+                                    Tixbro charges a 10% commission on ticket sales. This covers platform usage, payment processing, customer support, and marketing. You receive 90% of the ticket price directly to your account.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.organizers.q3">When do I receive payment for ticket sales?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.organizers.a3">
+                                    Payments are transferred to your registered bank account within 7 days after the event concludes. This ensures smooth refund processing if the event is cancelled or postponed.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.organizers.q4">Can I track ticket sales in real-time?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.organizers.a4">
+                                    Yes! Your organizer dashboard provides real-time analytics including tickets sold, revenue, customer demographics, and booking trends. You can export reports anytime.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.organizers.q5">What if I need to cancel or reschedule my event?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.organizers.a5">
+                                    Contact Tixbro support immediately. For cancellations, you're responsible for full refunds. For rescheduling, update the event date in your dashboard, and all ticket holders will be automatically notified.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Issues -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">
+                        <i class="fas fa-tools"></i>
+                        <span data-i18n="faq.technical.title">Technical Issues</span>
+                    </h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.technical.q1">The website is not loading. What should I do?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.technical.a1">
+                                    Try clearing your browser cache and cookies, or use a different browser. Make sure you have a stable internet connection. If the problem persists, try accessing from the mobile app or contact support.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.technical.q2">I'm not receiving booking confirmation emails</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.technical.a2">
+                                    Check your spam/junk folder. Add support@tixbro.com to your contacts. Verify that the email address in your profile is correct. You can also access tickets from "My Bookings" in your account.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.technical.q3">The mobile app is crashing. How do I fix it?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.technical.a3">
+                                    Update to the latest app version from Play Store/App Store. Clear app cache from your phone settings. If issues continue, uninstall and reinstall the app. Your bookings and account data will remain safe.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                <span data-i18n="faq.technical.q4">I received a duplicate charge. What now?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content" data-i18n="faq.technical.a4">
+                                    Contact our support team immediately at support@tixbro.com with proof of duplicate charges (bank statement/transaction screenshot). Duplicate amounts will be refunded within 5-7 business days after verification.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Help -->
+                <div class="contact-help">
+                    <h3 data-i18n="faq.contact.title">Still have questions?</h3>
+                    <p data-i18n="faq.contact.subtitle">Our support team is here to help!</p>
+                    <p style="margin-top: 1rem;">
+                        <i class="fas fa-envelope"></i> <span data-i18n="faq.contact.email">Email:</span> <a href="mailto:support@tixbro.com">support@tixbro.com</a><br>
+                        <i class="fas fa-phone"></i> <span data-i18n="faq.contact.phone">Phone:</span> +91-XXX-XXX-XXXX<br>
+                        <i class="fas fa-clock"></i> <span data-i18n="faq.contact.hours">Hours: Mon-Sat, 9 AM - 9 PM IST</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Tixbro</h3>
+                    <p>India's premier ticket booking platform for all your entertainment needs.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../shop.html">Events</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="refund.html">Refund Policy</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Tixbro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/i18n.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // FAQ Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const isActive = button.classList.contains('active');
+
+                // Close all other items
+                document.querySelectorAll('.faq-question').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.nextElementSibling.classList.remove('active');
+                });
+
+                // Toggle current item
+                if (!isActive) {
+                    button.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('faqSearch');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('[data-i18n]').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Hide sections with no visible items
+            document.querySelectorAll('.faq-section').forEach(section => {
+                const visibleItems = section.querySelectorAll('.faq-item[style="display: block;"]').length;
+                section.style.display = visibleItems > 0 ? 'block' : 'none';
+            });
+        });
+
+        // Language switching
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+
+                // Update active state
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Apply language
+                if (window.languageManager) {
+                    window.languageManager.setLanguage(lang);
+                }
+            });
+        });
+
+        // Initialize language on page load
+        if (window.languageManager) {
+            window.languageManager.init();
+        }
+    </script>
+</body>
+</html>
