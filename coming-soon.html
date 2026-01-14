@@ -146,46 +146,6 @@
             line-height: 1.8;
         }
 
-        /* Countdown */
-        .countdown {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-        }
-
-        .countdown-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 107, 53, 0.3);
-            border-radius: 15px;
-            padding: 25px 30px;
-            min-width: 100px;
-            transition: all 0.3s ease;
-        }
-
-        .countdown-item:hover {
-            background: rgba(255, 107, 53, 0.1);
-            border-color: rgba(255, 107, 53, 0.6);
-            transform: translateY(-5px);
-        }
-
-        .countdown-value {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #ff6b35;
-            display: block;
-        }
-
-        .countdown-label {
-            font-size: 0.9rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
-        }
-
         /* Email Signup */
         .notify-section {
             margin-bottom: 40px;
@@ -396,23 +356,6 @@
                 font-size: 1rem;
             }
 
-            .countdown {
-                gap: 10px;
-            }
-
-            .countdown-item {
-                padding: 20px 15px;
-                min-width: 80px;
-            }
-
-            .countdown-value {
-                font-size: 2rem;
-            }
-
-            .countdown-label {
-                font-size: 0.75rem;
-            }
-
             .email-form {
                 flex-direction: column;
             }
@@ -433,15 +376,6 @@
 
             .main-title {
                 font-size: 2rem;
-            }
-
-            .countdown-item {
-                min-width: 70px;
-                padding: 15px 10px;
-            }
-
-            .countdown-value {
-                font-size: 1.5rem;
             }
         }
     </style>
@@ -467,26 +401,6 @@
             <p class="subtitle">
                 We're working hard to bring you the ultimate ticket booking experience for concerts, sports, events, and more. Stay tuned!
             </p>
-
-            <!-- Countdown Timer -->
-            <div class="countdown" id="countdown">
-                <div class="countdown-item">
-                    <span class="countdown-value" id="days">00</span>
-                    <span class="countdown-label">Days</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-value" id="hours">00</span>
-                    <span class="countdown-label">Hours</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-value" id="minutes">00</span>
-                    <span class="countdown-label">Minutes</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-value" id="seconds">00</span>
-                    <span class="countdown-label">Seconds</span>
-                </div>
-            </div>
 
             <!-- Email Notification -->
             <div class="notify-section">
@@ -556,35 +470,6 @@
     </div>
 
     <script>
-        // Countdown Timer
-        function startCountdown() {
-            // Set launch date (adjust this to your actual launch date)
-            const launchDate = new Date('2026-02-15T00:00:00').getTime();
-
-            const countdown = setInterval(function() {
-                const now = new Date().getTime();
-                const distance = launchDate - now;
-
-                // Calculate time units
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                // Display countdown
-                document.getElementById('days').textContent = String(days).padStart(2, '0');
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-
-                // If countdown is over
-                if (distance < 0) {
-                    clearInterval(countdown);
-                    document.getElementById('countdown').innerHTML = '<h3>We\'re Live!</h3>';
-                }
-            }, 1000);
-        }
-
         // Email Form Submission
         document.getElementById('emailForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -620,7 +505,6 @@
         }
 
         // Initialize
-        startCountdown();
         createParticles();
     </script>
 </body>
